@@ -15,28 +15,54 @@ public class BarController : MonoBehaviour
     private Slider[] barStudy;
     private Slider[] barProject;
     private Slider[] barTest;
+
+    private LevelController levelController;
     // Start is called before the first frame update
     void Start()
     {
         barTime = GameObject.FindGameObjectsWithTag(tagTime)
-                          .Select(go => go.GetComponent<Slider>())
-                          .ToArray();
+            .Select(go => go.GetComponent<Slider>())
+            .ToArray();
         
         barStudy = GameObject.FindGameObjectsWithTag(tagStudy)
-                          .Select(go => go.GetComponent<Slider>())
-                          .ToArray();
+            .Select(go => go.GetComponent<Slider>())
+            .ToArray();
 
         barProject = GameObject.FindGameObjectsWithTag(tagProject)
-                          .Select(go => go.GetComponent<Slider>())
-                          .ToArray();
+            .Select(go => go.GetComponent<Slider>())
+            .ToArray();
         
         barTest = GameObject.FindGameObjectsWithTag(tagTest)
-                          .Select(go => go.GetComponent<Slider>())
-                          .ToArray();
+            .Select(go => go.GetComponent<Slider>())
+            .ToArray();
+
+        levelController = GameObject.Find("Menu").GetComponent<LevelController>();
+        
+        foreach (Slider slider in barTime)
+        {
+            slider.maxValue = levelController.max_time;
+        }
+
+        foreach (Slider slider in barStudy)
+        {
+            slider.maxValue = levelController.max_study;
+        }
+
+        foreach (Slider slider in barProject)
+        {
+            slider.maxValue = levelController.max_project;
+        }
+
+        foreach (Slider slider in barTest)
+        {
+            slider.maxValue = levelController.max_test;
+        }
+
+
     }
 
     
-    public void updateBarTime(int fillValue)
+    public void updateBarTime(float fillValue)
     {
         foreach (Slider slider in barTime)
         {

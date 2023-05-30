@@ -16,6 +16,11 @@ TagManager:
   - CountMentalHealth
   - Settings
   - PopUp
+  - priceStudy
+  - priceProject
+  - priceTest
+  - unlockProject
+  - unlockTest
   layers:
   - Default
   - TransparentFX
