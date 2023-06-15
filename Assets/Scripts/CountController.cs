@@ -68,6 +68,15 @@ public class CountController : MonoBehaviour
         price_test.transform.GetComponent<TextMeshProUGUI>().text = Math.Round(levelController.price_test_MH,0).ToString() + " Mental Health / " + Math.Round(levelController.price_test_time, 2).ToString() + " Time";
         price_project.transform.GetComponent<TextMeshProUGUI>().text = Math.Round(levelController.price_project_MH,0).ToString() + " Mental Health / " + Math.Round(levelController.price_project_time, 2).ToString() + " Time";
         price_study.transform.GetComponent<TextMeshProUGUI>().text = Math.Round(levelController.price_study_MH,0).ToString() + " Mental Health / " + Math.Round(levelController.price_study_time, 2).ToString() + " Time";
+        updateCountTime(0);
+        updateCountMentalHealth(0);        
+        updateCountStudy(0);    
+        updateCountProject(0);
+        updateCountTest(0);
+        updateCountCoin(0);
+        //Debug.Log("levelController.unlock_project: " + levelController.unlock_project);
+        unlockProject.SetActive(!levelController.unlock_project);
+        unlockTest.SetActive(!levelController.unlock_test);
     }
 
     void Update(){ 
@@ -91,9 +100,15 @@ public class CountController : MonoBehaviour
         levelController.inc_time *= 1.1f;
         levelController.inc_MH *= 1.1f;
 
-        levelController.price_study_MH += levelController.price_study_MH*0.1f;
-        levelController.price_study_time += levelController.price_study_time*0.1f;
-        price_study.transform.GetComponent<TextMeshProUGUI>().text = Math.Round(levelController.price_study_MH,0).ToString() + " Mental Health / " + Math.Round(levelController.price_study_time, 2).ToString() + " Time";
+        levelController.price_study_MH *= 1.07f;
+        levelController.price_study_time *= 1.07f;
+        if (levelController.price_study_MH >= 1000){
+            var exponent = Math.Floor(Math.Log10(Math.Abs(levelController.price_study_MH)));
+            var rounded = Math.Round((levelController.price_study_MH) / Math.Pow(10, exponent), 2);
+            price_study.transform.GetComponent<TextMeshProUGUI>().text = rounded.ToString("F2") + "e+" + exponent.ToString() + " Mental Health / " + Math.Round(levelController.price_study_time, 2).ToString() + " Time";
+        } else {
+            price_study.transform.GetComponent<TextMeshProUGUI>().text = Math.Round(levelController.price_study_MH,0).ToString() + " Mental Health / " + Math.Round(levelController.price_study_time, 2).ToString() + " Time";
+        }
 
         if (levelController.study == 10){
             levelController.unlock_project = true;
@@ -114,10 +129,16 @@ public class CountController : MonoBehaviour
             levelController.inc_time *= 1.5f;
             levelController.inc_MH *= 1.5f;
 
-            levelController.price_project_MH += levelController.price_project_MH*0.1f;
-            levelController.price_project_time += levelController.price_project_time*0.1f;
-            price_project.transform.GetComponent<TextMeshProUGUI>().text = Math.Round(levelController.price_project_MH,0).ToString() + " Mental Health / " + Math.Round(levelController.price_project_time, 2).ToString() + " Time";
-            
+            levelController.price_project_MH *= 1.1f;
+            levelController.price_project_time *= 1.1f;
+            if (levelController.price_project_MH >= 1000){
+                var exponent = Math.Floor(Math.Log10(Math.Abs(levelController.price_project_MH)));
+                var rounded = Math.Round((levelController.price_project_MH) / Math.Pow(10, exponent), 2);
+                price_project.transform.GetComponent<TextMeshProUGUI>().text = rounded.ToString("F2") + "e+" + exponent.ToString() + " Mental Health / " + Math.Round(levelController.price_project_time, 2).ToString() + " Time";
+            } else {
+                price_project.transform.GetComponent<TextMeshProUGUI>().text = Math.Round(levelController.price_project_MH,0).ToString() + " Mental Health / " + Math.Round(levelController.price_project_time, 2).ToString() + " Time";
+            }
+
             if (levelController.project/levelController.max_project >= 0.5f){
                 levelController.unlock_test = true;
                 unlockTest.SetActive(false);
@@ -138,8 +159,17 @@ public class CountController : MonoBehaviour
             levelController.inc_time *= 1.8f;
             levelController.inc_MH *= 1.8f;
 
-            levelController.price_test_MH += levelController.price_test_MH*0.2f;
-            levelController.price_test_time += levelController.price_test_time*0.2f;
+            levelController.price_test_MH *= 1.15f;
+            levelController.price_test_time *= 1.15f;
+
+            if (levelController.price_test_MH >= 1000){
+                var exponent = Math.Floor(Math.Log10(Math.Abs(levelController.price_test_MH)));
+                var rounded = Math.Round((levelController.price_test_MH) / Math.Pow(10, exponent), 2);
+                price_test.transform.GetComponent<TextMeshProUGUI>().text = rounded.ToString("F2") + "e+" + exponent.ToString() + " Mental Health / " + Math.Round(levelController.price_test_time, 2).ToString() + " Time";
+            } else {
+                price_test.transform.GetComponent<TextMeshProUGUI>().text = Math.Round(levelController.price_test_MH,0).ToString() + " Mental Health / " + Math.Round(levelController.price_test_time, 2).ToString() + " Time";
+            }
+            
             price_test.transform.GetComponent<TextMeshProUGUI>().text = Math.Round(levelController.price_test_MH,0).ToString() + " Mental Health / " + Math.Round(levelController.price_test_time, 2).ToString() + " Time";
 
         }
@@ -150,7 +180,7 @@ public class CountController : MonoBehaviour
         foreach (TextMeshProUGUI count in CountMentalHealth)
         {
             // Get the current text value
-            string currentValue = count.text;
+            string currentValue = levelController.MH.ToString();
 
             // Convert the text value to an integer using int.Parse()
             float intValue;
@@ -158,7 +188,13 @@ public class CountController : MonoBehaviour
             {
                 // Conversion successful
                 if (intValue + discreetValue >= 0) {
-                    count.text = Math.Round(intValue + discreetValue, 2).ToString();
+                    if (intValue + discreetValue >= 1000){
+                        var exponent = Math.Floor(Math.Log10(Math.Abs(intValue + discreetValue)));
+                        var rounded = Math.Round((intValue + discreetValue) / Math.Pow(10, exponent), 2);
+                        count.text = rounded.ToString("F2") + "e+" + exponent.ToString();
+                    } else {
+                        count.text = Math.Round(intValue + discreetValue, 2).ToString();
+                    }
                     levelController.MH = intValue + discreetValue;
                 } 
                 
@@ -176,7 +212,7 @@ public class CountController : MonoBehaviour
         foreach (TextMeshProUGUI count in CountTime)
         {
             // Get the current text value
-            string currentValue = count.text;
+            string currentValue = levelController.time.ToString();
 
             // Convert the text value to an integer using int.Parse()
             float intValue;
@@ -186,11 +222,15 @@ public class CountController : MonoBehaviour
                 if (intValue + discreetValue >= 0 && intValue + discreetValue < levelController.max_time) {
                     count.text = Math.Round(intValue + discreetValue, 2).ToString();
                     levelController.time = intValue + discreetValue;
-                    barController.updateBarTime(discreetValue);
+                    if (discreetValue > 0){
+                        barController.updateBarTime(discreetValue);
+                    }
                 } else if (intValue + discreetValue >= levelController.max_time){
                     count.text = levelController.max_time.ToString();
                     levelController.time = intValue + discreetValue;
-                    barController.updateBarTime(discreetValue);
+                    if (discreetValue > 0){
+                        barController.updateBarTime(discreetValue);
+                    }
                 } else{
                     count.text = "0";
                     barController.updateBarTime(-levelController.time);
@@ -207,10 +247,11 @@ public class CountController : MonoBehaviour
 
     public void updateCountStudy(int discreetValue)
     {
+        //Debug.Log("updateCountStudy");
         foreach (TextMeshProUGUI count in CountStudy)
         {
             // Get the current text value
-            string currentValue = count.text;
+            string currentValue = levelController.study.ToString();
 
             // Convert the text value to an integer using int.Parse()
             int intValue;
@@ -219,7 +260,9 @@ public class CountController : MonoBehaviour
                 // Conversion successful
                 if (intValue + discreetValue >= 0) {
                     count.text = (intValue + discreetValue).ToString();
-                    barController.updateBarStudy(discreetValue);
+                    if (discreetValue > 0){
+                        barController.updateBarStudy(discreetValue);
+                    }
                 }
             }
             else
@@ -235,7 +278,7 @@ public class CountController : MonoBehaviour
         foreach (TextMeshProUGUI count in CountProject)
         {
             // Get the current text value
-            string currentValue = count.text;
+            string currentValue = levelController.project.ToString();
 
             // Convert the text value to an integer using int.Parse()
             int intValue;
@@ -244,7 +287,9 @@ public class CountController : MonoBehaviour
                 // Conversion successful
                 if (intValue + discreetValue >= 0) {
                     count.text = (intValue + discreetValue).ToString();
-                    barController.updateBarProject(discreetValue);
+                    if (discreetValue > 0){
+                        barController.updateBarProject(discreetValue);
+                    }
                 }
             }
             else
@@ -260,7 +305,7 @@ public class CountController : MonoBehaviour
         foreach (TextMeshProUGUI count in CountTest)
         {
             // Get the current text value
-            string currentValue = count.text;
+            string currentValue = levelController.test.ToString();
 
             // Convert the text value to an integer using int.Parse()
             int intValue;
@@ -269,7 +314,9 @@ public class CountController : MonoBehaviour
                 // Conversion successful
                 if (intValue + discreetValue >= 0) {
                     count.text = (intValue + discreetValue).ToString();
-                    barController.updateBarTest(discreetValue);
+                    if (discreetValue > 0){
+                        barController.updateBarTest(discreetValue);
+                    }
                 }
             }
             else
@@ -285,7 +332,7 @@ public class CountController : MonoBehaviour
         foreach (TextMeshProUGUI count in CountCoin)
         {
             // Get the current text value
-            string currentValue = count.text;
+            string currentValue = levelController.coin.ToString();
 
             // Convert the text value to an integer using int.Parse()
             // Trocar pra float
