@@ -21,6 +21,7 @@ TagManager:
   - priceTest
   - unlockProject
   - unlockTest
+  - offline
   layers:
   - Default
   - TransparentFX

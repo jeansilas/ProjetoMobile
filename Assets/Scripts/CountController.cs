@@ -74,50 +74,57 @@ public class CountController : MonoBehaviour
         updateCountProject(0);
         updateCountTest(0);
         updateCountCoin(0);
-        //Debug.Log("levelController.unlock_project: " + levelController.unlock_project);
+
         unlockProject.SetActive(!levelController.unlock_project);
         unlockTest.SetActive(!levelController.unlock_test);
+        
     }
 
     void Update(){ 
         timer += Time.deltaTime;
         if (timer >= 1){
-            updateCountTime(levelController.inc_time);
-            updateCountMentalHealth(levelController.inc_MH);
+            var inc_MH = levelController.inc_MH + levelController.inc_MH * levelController.study*levelController.inc_study + levelController.inc_MH * levelController.project*levelController.inc_project + levelController.inc_MH * levelController.test*levelController.inc_test;
+            var inc_time = levelController.inc_time + levelController.inc_time * levelController.study*levelController.inc_study + levelController.inc_time * levelController.project*levelController.inc_project + levelController.inc_time * levelController.test*levelController.inc_test;
+            updateCountTime(inc_time);
+            updateCountMentalHealth(inc_MH);
             timer = 0;
         }
     }
 
     public void buyStudy(){
-        if (levelController.MH < levelController.price_study_MH || levelController.time < levelController.price_study_time){
-            return;
-        }
-        updateCountStudy(1);
-        updateCountMentalHealth(-levelController.price_study_MH);
-        updateCountTime(-levelController.price_study_time);
-        levelController.study += 1;
+        if (levelController.study < levelController.max_study){
+            if (levelController.MH < levelController.price_study_MH || levelController.time < levelController.price_study_time){
+                return;
+            }
+            updateCountStudy(1);
+            updateCountMentalHealth(-levelController.price_study_MH);
+            updateCountTime(-levelController.price_study_time);
+            levelController.study += 1;
 
-        levelController.inc_time *= 1.1f;
-        levelController.inc_MH *= 1.1f;
+            levelController.price_study_MH = levelController.price_study_MH_og * (float) Math.Pow(levelController.inc_study, levelController.study);
+            levelController.price_study_time = levelController.price_study_time_og * (float) Math.Pow(levelController.inc_study, levelController.study);
 
-        levelController.price_study_MH *= 1.07f;
-        levelController.price_study_time *= 1.07f;
-        if (levelController.price_study_MH >= 1000){
-            var exponent = Math.Floor(Math.Log10(Math.Abs(levelController.price_study_MH)));
-            var rounded = Math.Round((levelController.price_study_MH) / Math.Pow(10, exponent), 2);
-            price_study.transform.GetComponent<TextMeshProUGUI>().text = rounded.ToString("F2") + "e+" + exponent.ToString() + " Mental Health / " + Math.Round(levelController.price_study_time, 2).ToString() + " Time";
-        } else {
-            price_study.transform.GetComponent<TextMeshProUGUI>().text = Math.Round(levelController.price_study_MH,0).ToString() + " Mental Health / " + Math.Round(levelController.price_study_time, 2).ToString() + " Time";
-        }
+            if (levelController.price_study_time > levelController.max_time){
+                levelController.price_study_time = levelController.max_time;
+            }
 
-        if (levelController.study == 10){
-            levelController.unlock_project = true;
-            unlockProject.SetActive(false);
-        }
+            if (levelController.price_study_MH >= 1000){
+                var exponent = Math.Floor(Math.Log10(Math.Abs(levelController.price_study_MH)));
+                var rounded = Math.Round((levelController.price_study_MH) / Math.Pow(10, exponent), 2);
+                price_study.transform.GetComponent<TextMeshProUGUI>().text = rounded.ToString("F2") + "e+" + exponent.ToString() + " Mental Health / " + Math.Round(levelController.price_study_time, 2).ToString() + " Time";
+            } else {
+                price_study.transform.GetComponent<TextMeshProUGUI>().text = Math.Round(levelController.price_study_MH,0).ToString() + " Mental Health / " + Math.Round(levelController.price_study_time, 2).ToString() + " Time";
+            }
+
+            if (levelController.study == 10){
+                levelController.unlock_project = true;
+                unlockProject.SetActive(false);
+            }
+        } 
     }
 
     public void buyProject(){
-        if (levelController.unlock_project){
+        if (levelController.unlock_project && levelController.project < levelController.max_project){
             if (levelController.MH < levelController.price_project_MH || levelController.time < levelController.price_project_time){
                 return;
             }
@@ -126,11 +133,13 @@ public class CountController : MonoBehaviour
             updateCountTime(-levelController.price_project_time);
             levelController.project += 1;
 
-            levelController.inc_time *= 1.5f;
-            levelController.inc_MH *= 1.5f;
+            levelController.price_project_MH = levelController.price_project_MH_og * (float) Math.Pow(levelController.inc_project, levelController.project);
+            levelController.price_project_time = levelController.price_project_time_og * (float) Math.Pow(levelController.inc_project, levelController.project);
 
-            levelController.price_project_MH *= 1.1f;
-            levelController.price_project_time *= 1.1f;
+            if (levelController.price_project_time > levelController.max_time){
+                levelController.price_project_time = levelController.max_time;
+            }
+
             if (levelController.price_project_MH >= 1000){
                 var exponent = Math.Floor(Math.Log10(Math.Abs(levelController.price_project_MH)));
                 var rounded = Math.Round((levelController.price_project_MH) / Math.Pow(10, exponent), 2);
@@ -143,11 +152,13 @@ public class CountController : MonoBehaviour
                 levelController.unlock_test = true;
                 unlockTest.SetActive(false);
             }
+        } else if (levelController.project == levelController.max_project){
+            levelController.done_project = true;
         }
     }
 
     public void buyTest(){
-        if (levelController.unlock_test){
+        if (levelController.unlock_test && levelController.test < levelController.max_test){
             if (levelController.MH < levelController.price_test_MH || levelController.time < levelController.price_test_time){
                 return;
             }
@@ -156,11 +167,12 @@ public class CountController : MonoBehaviour
             updateCountTime(-levelController.price_test_time);
             levelController.test += 1;
 
-            levelController.inc_time *= 1.8f;
-            levelController.inc_MH *= 1.8f;
+            levelController.price_test_MH = levelController.price_test_MH_og * (float) Math.Pow(levelController.inc_test, levelController.test);
+            levelController.price_test_time = levelController.price_test_time_og * (float) Math.Pow(levelController.inc_test, levelController.test);
 
-            levelController.price_test_MH *= 1.15f;
-            levelController.price_test_time *= 1.15f;
+            if (levelController.price_test_time > levelController.max_time){
+                levelController.price_test_time = levelController.max_time;
+            }
 
             if (levelController.price_test_MH >= 1000){
                 var exponent = Math.Floor(Math.Log10(Math.Abs(levelController.price_test_MH)));
@@ -172,6 +184,8 @@ public class CountController : MonoBehaviour
             
             price_test.transform.GetComponent<TextMeshProUGUI>().text = Math.Round(levelController.price_test_MH,0).ToString() + " Mental Health / " + Math.Round(levelController.price_test_time, 2).ToString() + " Time";
 
+        } else if (levelController.test == levelController.max_test){
+            levelController.done_test = true;
         }
     }
 
