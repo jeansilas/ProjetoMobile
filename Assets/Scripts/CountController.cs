@@ -6,6 +6,9 @@ using TMPro;
 using System.Linq;
 using System;
 
+// Reference for scientific notation: https://www.youtube.com/watch?v=DXjgMOee1Eg&list=PLGSUBi8nI9v9I5uaSRe8ccSV02W2dyxGM&index=7
+// Reference for formulas: https://blog.kongregate.com/the-math-of-idle-games-part-i/
+
 public class CountController : MonoBehaviour
 {
     private string tagTime = "CountTime";
@@ -77,7 +80,6 @@ public class CountController : MonoBehaviour
 
         unlockProject.SetActive(!levelController.unlock_project);
         unlockTest.SetActive(!levelController.unlock_test);
-        
     }
 
     void Update(){ 
@@ -148,7 +150,7 @@ public class CountController : MonoBehaviour
                 price_project.transform.GetComponent<TextMeshProUGUI>().text = Math.Round(levelController.price_project_MH,0).ToString() + " Mental Health / " + Math.Round(levelController.price_project_time, 2).ToString() + " Time";
             }
 
-            if (levelController.project/levelController.max_project >= 0.5f){
+            if (levelController.project >= levelController.max_project * 0.5){
                 levelController.unlock_test = true;
                 unlockTest.SetActive(false);
             }

@@ -5,6 +5,8 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
+// Reference: https://www.youtube.com/watch?v=qSkNISO_gBQ&list=PLGSUBi8nI9v9I5uaSRe8ccSV02W2dyxGM&index=34
+
 public class OfflineController : MonoBehaviour
 {
     public GameObject offlinePanel;
@@ -13,6 +15,7 @@ public class OfflineController : MonoBehaviour
     public TextMeshProUGUI timeGains;
 
     public LevelController levelController;
+    public RewardedAdsButton rewardedAdsButton;
     private float MHgainsOffline;
     private float timeGainsOffline;
 
@@ -25,6 +28,10 @@ public class OfflineController : MonoBehaviour
         MHgains = offlinePanel.transform.Find("MHGains")?.GetComponent<TextMeshProUGUI>();
         timeGains = offlinePanel.transform.Find("timeGains")?.GetComponent<TextMeshProUGUI>();
         Time.timeScale = 0;
+        //offlinePanel.SetActive(false);
+
+        rewardedAdsButton = GameObject.Find("Menu").GetComponent<RewardedAdsButton>();
+
     }
 
     // Update is called once per frame
@@ -87,7 +94,10 @@ public class OfflineController : MonoBehaviour
     }
 
     public void DoubleGains(){
+
         levelController.MH += MHgainsOffline*2;
+
+        rewardedAdsButton.ShowAd();
 
         if(levelController.time > levelController.max_time)
         {
