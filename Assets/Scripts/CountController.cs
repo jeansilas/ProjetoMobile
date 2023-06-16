@@ -68,7 +68,7 @@ public class CountController : MonoBehaviour
         price_test.transform.GetComponent<TextMeshProUGUI>().text = Math.Round(levelController.price_test_MH,0).ToString() + " Mental Health / " + Math.Round(levelController.price_test_time, 2).ToString() + " Time";
         price_project.transform.GetComponent<TextMeshProUGUI>().text = Math.Round(levelController.price_project_MH,0).ToString() + " Mental Health / " + Math.Round(levelController.price_project_time, 2).ToString() + " Time";
         price_study.transform.GetComponent<TextMeshProUGUI>().text = Math.Round(levelController.price_study_MH,0).ToString() + " Mental Health / " + Math.Round(levelController.price_study_time, 2).ToString() + " Time";
-        updateCountTime(0);
+        //updateCountTime(0);
         updateCountMentalHealth(0);        
         updateCountStudy(0);    
         updateCountProject(0);
@@ -236,19 +236,17 @@ public class CountController : MonoBehaviour
                 if (intValue + discreetValue >= 0 && intValue + discreetValue < levelController.max_time) {
                     count.text = Math.Round(intValue + discreetValue, 2).ToString();
                     levelController.time = intValue + discreetValue;
-                    if (discreetValue > 0){
-                        barController.updateBarTime(discreetValue);
-                    }
+                    barController.updateBarTime(discreetValue);
                 } else if (intValue + discreetValue >= levelController.max_time){
                     count.text = levelController.max_time.ToString();
-                    levelController.time = intValue + discreetValue;
-                    if (discreetValue > 0){
-                        barController.updateBarTime(discreetValue);
-                    }
+                    levelController.time = levelController.max_time;
+                    barController.updateBarTime(discreetValue);
+                    
                 } else{
-                    count.text = "0";
-                    barController.updateBarTime(-levelController.time);
-                    levelController.time = 0;
+                    //count.text = "0";
+                    //barController.updateBarTime(-levelController.time);
+                    //levelController.time = 0;
+                    return;
                 }
             }
             else
@@ -362,6 +360,55 @@ public class CountController : MonoBehaviour
             {
                 // Conversion failed
                 Debug.Log("Invalid integer value");
+            }
+        }
+    }
+
+    public void upgradeTemporary(int type) {
+
+        Debug.Log("Temporary Upgrade");
+        
+        if (type == 1) { // type1: Aumenta a quantidade de tempo exemplo:  vai de 3h para 6h (Absoluto)
+            int MH = levelController.price_MH_upgrade_temporary_type1;
+            float time = levelController.price_time_upgrade_temporary_type1;
+            Debug.Log("Tipo 1");
+            if (levelController.MH < MH || levelController.time < time){
+            return;
+            }
+
+            else {
+                updateCountMentalHealth(-MH);
+                updateCountTime(-time);
+                levelController.time = levelController.time*2;
+            }
+        }
+
+        else if (type == 2) { // type2: Aumenta a taxa de crescimento do "time do jogo". por exemplo ele vai ganhar 1 time a cada 10 min ao invés de 20 min (Taxa/percentual)
+            int MH = levelController.price_MH_upgrade_temporary_type2;
+            float time = levelController.price_time_upgrade_temporary_type2;
+            if (levelController.MH < MH || levelController.time < time){
+            return;
+            }
+
+            else {
+                updateCountMentalHealth(-MH);
+                updateCountTime(-time);
+                levelController.inc_time = levelController.inc_time*4;
+            }
+
+        }
+
+        else {  // type3: Aumenta a taxa de ganho de Mental Health por tempo. Ao invés de ganhar 0.5 MH por minuto, ganha 1 MH por minuto   (Taxa/percentual)
+            int MH = levelController.price_MH_upgrade_temporary_type3;
+            float time = levelController.price_time_upgrade_temporary_type3;
+            if (levelController.MH < MH || levelController.time < time){
+            return;
+            }
+
+            else {
+                updateCountMentalHealth(-MH);
+                updateCountTime(-time);
+                levelController.inc_MH = levelController.inc_MH*2;
             }
         }
     }

@@ -51,6 +51,18 @@ public class LevelController : MonoBehaviour
     private float timer;
     public OfflineController offlineController;
 
+    public int price_MH_upgrade_temporary_type1;
+    public int price_MH_upgrade_temporary_type2;
+    public int price_MH_upgrade_temporary_type3;
+
+    public int price_coin_upgrade_permanent_type1;
+    public int price_coin_upgrade_permanent_type2;
+    public int price_coin_upgrade_permanent_type3;
+
+    public float price_time_upgrade_temporary_type1;
+    public float price_time_upgrade_temporary_type2;
+    public float price_time_upgrade_temporary_type3;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -92,6 +104,19 @@ public class LevelController : MonoBehaviour
 
         unlock_project = false;
         unlock_test = false;
+
+        price_MH_upgrade_temporary_type1 = 10;
+        price_MH_upgrade_temporary_type2 = 20;
+        price_MH_upgrade_temporary_type3 = 30;
+
+        price_coin_upgrade_permanent_type1 = 50;
+        price_coin_upgrade_permanent_type2 = 70;
+        price_coin_upgrade_permanent_type3 = 60;
+
+        price_time_upgrade_temporary_type1 = 3.0f;
+        price_time_upgrade_temporary_type2 = 2.5f;
+        price_time_upgrade_temporary_type3 = 3.5f;
+
         */
         
         
@@ -153,6 +178,18 @@ public class LevelController : MonoBehaviour
         done_project = bool.Parse(PlayerPrefs.GetString("done_project", "False"));
         done_test = bool.Parse(PlayerPrefs.GetString("done_test", "False"));
 
+        price_MH_upgrade_temporary_type1 = PlayerPrefs.GetInt("price_MH_upgrade_temporary_type1", 10);
+        price_MH_upgrade_temporary_type2 = PlayerPrefs.GetInt("price_MH_upgrade_temporary_type2", 20);
+        price_MH_upgrade_temporary_type3 = PlayerPrefs.GetInt("price_MH_upgrade_temporary_type3", 30);
+
+        price_coin_upgrade_permanent_type1 = PlayerPrefs.GetInt("price_coin_upgrade_permanent_type1", 50);
+        price_coin_upgrade_permanent_type2 = PlayerPrefs.GetInt("price_coin_upgrade_permanent_type2", 70);
+        price_coin_upgrade_permanent_type3 = PlayerPrefs.GetInt("price_coin_upgrade_permanent_type3", 60);
+
+        price_time_upgrade_temporary_type1 = PlayerPrefs.GetFloat("price_time_upgrade_temporary_type1", 3.0f);
+        price_time_upgrade_temporary_type2 = PlayerPrefs.GetFloat("price_time_upgrade_temporary_type2", 2.5f);
+        price_time_upgrade_temporary_type3 = PlayerPrefs.GetFloat("price_time_upgrade_temporary_type3", 3.5f);
+
     }
 
     public void Save()
@@ -197,6 +234,18 @@ public class LevelController : MonoBehaviour
         PlayerPrefs.SetString("offlineTime", DateTime.Now.ToBinary().ToString());
         PlayerPrefs.SetString("done_project", done_project.ToString());
         PlayerPrefs.SetString("done_test", done_test.ToString());
+
+        PlayerPrefs.SetInt("price_MH_upgrade_temporary_type1", price_MH_upgrade_temporary_type1);
+        PlayerPrefs.SetInt("price_MH_upgrade_temporary_type2", price_MH_upgrade_temporary_type2);
+        PlayerPrefs.SetInt("price_MH_upgrade_temporary_type3", price_MH_upgrade_temporary_type3);
+
+        PlayerPrefs.SetInt("price_coin_upgrade_permanent_type1", price_coin_upgrade_permanent_type1);
+        PlayerPrefs.SetInt("price_coin_upgrade_permanent_type2", price_coin_upgrade_permanent_type2);
+        PlayerPrefs.SetInt("price_coin_upgrade_permanent_type3", price_coin_upgrade_permanent_type3);
+
+        PlayerPrefs.SetFloat("price_time_upgrade_temporary_type1", price_time_upgrade_temporary_type1);
+        PlayerPrefs.SetFloat("price_time_upgrade_temporary_type2", price_time_upgrade_temporary_type2);
+        PlayerPrefs.SetFloat("price_time_upgrade_temporary_type3", price_time_upgrade_temporary_type3);
 
         PlayerPrefs.Save();
 
