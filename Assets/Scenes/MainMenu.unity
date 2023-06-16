@@ -1899,6 +1899,8 @@ GameObject:
   - component: {fileID: 307116528}
   - component: {fileID: 307116527}
   - component: {fileID: 307116529}
+  - component: {fileID: 307116530}
+  - component: {fileID: 307116531}
   m_Layer: 5
   m_Name: Menu
   m_TagString: Menu
@@ -2085,6 +2087,39 @@ MonoBehaviour:
   MHgains: {fileID: 802467096}
   timeGains: {fileID: 194269466}
   levelController: {fileID: 307116526}
+  rewardedAdsButton: {fileID: 0}
+--- !u!114 &307116530
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 307116521}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c18ceed848b709b45a98542d38e27752, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _androidGameId: 5317033
+  _iOSGameId: 5317032
+  _testMode: 1
+  rewardedAdsButton: {fileID: 307116531}
+--- !u!114 &307116531
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 307116521}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b6067e66d1d9f644a91d81e19bb8bb4e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _showAdButton: {fileID: 2104173047}
+  _androidAdUnitId: Rewarded_Android
+  _iOSAdUnitId: Rewarded_iOS
+  _adsCountText: {fileID: 0}
 --- !u!1 &322884976
 GameObject:
   m_ObjectHideFlags: 0

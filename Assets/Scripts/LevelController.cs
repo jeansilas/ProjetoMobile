@@ -3,6 +3,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+// Reference: https://www.youtube.com/watch?v=OTAYEZMUI-o&list=PLGSUBi8nI9v9I5uaSRe8ccSV02W2dyxGM&index=10
+
 public class LevelController : MonoBehaviour
 {
     public float price_study_MH;
@@ -123,7 +125,6 @@ public class LevelController : MonoBehaviour
         Load();
         offlineController = GameObject.Find("Menu").GetComponent<OfflineController>();
         offlineController.LoadOfflineProduction();
-
     }
 
     // Update is called once per frame
