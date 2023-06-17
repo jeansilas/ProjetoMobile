@@ -17,6 +17,9 @@ public class CountController : MonoBehaviour
     private string tagStudy = "CountStudy";
     private string tagProject = "CountProject";
     private string tagTest = "CountTest";
+    private string tagUpgradeTemporary = "UpgradeTemporary";
+    private string tagPopUp = "Settings";
+
 
     private TextMeshProUGUI[] CountTime;
     private  TextMeshProUGUI[] CountCoin;
@@ -24,11 +27,18 @@ public class CountController : MonoBehaviour
     private  TextMeshProUGUI[] CountStudy;
     private  TextMeshProUGUI[] CountProject;
     private  TextMeshProUGUI[] CountTest;
+ 
+
+
     private GameObject price_study;
     private GameObject price_project;
     private GameObject price_test;
     private GameObject unlockProject;
     private GameObject unlockTest;
+    private GameObject[] upgradesTemporary;
+    private GameObject[] PanelPopUps;
+
+    public List<UpgradeObject> UpgradeObjects = new List<UpgradeObject>();
 
     private LevelController levelController;
     private BarController barController;
@@ -36,6 +46,13 @@ public class CountController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+
+
+        upgradesTemporary = GameObject.FindGameObjectsWithTag(tagUpgradeTemporary);
+
+        PanelPopUps = GameObject.FindGameObjectsWithTag(tagPopUp);
+
+
         CountTime = GameObject.FindGameObjectsWithTag(tagTime)
             .Select(go => go.GetComponent<TextMeshProUGUI>())
             .ToArray();
@@ -78,8 +95,22 @@ public class CountController : MonoBehaviour
         updateCountTest(0);
         updateCountCoin(0);
 
-        unlockProject.SetActive(!levelController.unlock_project);
-        unlockTest.SetActive(!levelController.unlock_test);
+        if (unlockProject != null){
+            unlockProject.SetActive(!levelController.unlock_project);
+        }
+
+        if (unlockTest != null){
+            unlockTest.SetActive(!levelController.unlock_test);
+        }
+
+
+        //Iniciando os valores dos upgrades
+        InstantiateUpgradeTemporary();
+        foreach (GameObject obj in PanelPopUps)
+        {
+            obj.SetActive(false);
+        }
+
     }
 
     void Update(){ 
@@ -89,6 +120,7 @@ public class CountController : MonoBehaviour
             var inc_time = levelController.inc_time + levelController.inc_time * levelController.study*levelController.inc_study + levelController.inc_time * levelController.project*levelController.inc_project + levelController.inc_time * levelController.test*levelController.inc_test;
             updateCountTime(inc_time);
             updateCountMentalHealth(inc_MH);
+            //InstantiateUpgradeTemporary();
             timer = 0;
         }
     }
@@ -414,6 +446,54 @@ public class CountController : MonoBehaviour
             }
         }
     }
+
+    public void InstantiateUpgradeTemporary() {
+        
+      //  foreach (GameObject upgrade in UpgradesTemporary)
+      //  {
+      // private GameObject Title;
+      // private GameObject ContentText;
+      //  private GameObject Icon;
+
+      //  Title = transform.GetChild(2);
+
+        
+       // Title.GetComponent<TextMeshProUGUI>().text = "Teste Funcionou";
+       // ContentText.GetComponent<TextMeshProUGUI>().text = "Teste Funcionou2";
+        //Icon.GetComponent<Image>().sprite = Resources.Load<Sprite>("Sprites/Icon/Icon_MH");
+        //}
+        int i = 0;
+        foreach (GameObject upgrade in upgradesTemporary) {
+            Transform Title;
+            Transform ContentText;
+            Transform Icon;
+            Transform TimeCount;
+            Transform MentalHealthCount;
+
+
+            Title = upgrade.transform.Find("Title");
+            Title.GetComponent<TextMeshProUGUI>().text = UpgradeObjects[i].Title;
+
+            ContentText = upgrade.transform.Find("ContentText");
+            ContentText.GetComponent<TextMeshProUGUI>().text = UpgradeObjects[i].ContentText;
+
+            TimeCount = upgrade.transform.Find("Cost").transform.Find("Time").transform.Find("TimeCount");
+            TimeCount.GetComponent<TextMeshProUGUI>().text = UpgradeObjects[i].TimeValue.ToString();
+
+            MentalHealthCount = upgrade.transform.Find("Cost").transform.Find("MentalHealth").transform.Find("MentalHealthCount");
+            MentalHealthCount.GetComponent<TextMeshProUGUI>().text = UpgradeObjects[i].MHValue.ToString();
+
+            Icon = upgrade.transform.Find("Icon");
+            Icon.GetComponent<Image>().sprite = UpgradeObjects[i].Icon;
+
+
+            i++;
+        }
+    }
+
+    
+
+    
 
     
 }

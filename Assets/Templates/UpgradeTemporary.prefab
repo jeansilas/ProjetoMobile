@@ -225,7 +225,7 @@ GameObject:
   - component: {fileID: 7398537349814991394}
   m_Layer: 5
   m_Name: UpgradeTemporary
-  m_TagString: Untagged
+  m_TagString: UpgradeTemporary
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -515,7 +515,7 @@ GameObject:
   - component: {fileID: 885991075025246776}
   - component: {fileID: 5095597308634871617}
   - component: {fileID: 1422176480558394539}
-  - component: {fileID: 8471531545463041291}
+  - component: {fileID: 4420672947127859602}
   m_Layer: 5
   m_Name: Cost
   m_TagString: Untagged
@@ -627,9 +627,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 8471531545463041291}
-        m_TargetAssemblyTypeName: CountController, Assembly-CSharp
-        m_MethodName: upgradeTemporary
+      - m_Target: {fileID: 4420672947127859602}
+        m_TargetAssemblyTypeName: UpgradeManager, Assembly-CSharp
+        m_MethodName: UpgradeClick
         m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -639,7 +639,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
---- !u!114 &8471531545463041291
+--- !u!114 &4420672947127859602
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -648,7 +648,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 6854328107629450863}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7a583d99b29e983439de6cfa3430bcec, type: 3}
+  m_Script: {fileID: 11500000, guid: f894620824b1e5845b768c2c7db4c089, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &8080569408231281901

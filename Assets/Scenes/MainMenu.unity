@@ -3068,6 +3068,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: UpgradeTemp1
       objectReference: {fileID: 0}
+    - target: {fileID: 4665170599896477548, guid: c3947cc6de3aa3243880f5fa44da0c10, type: 3}
+      propertyPath: m_TagString
+      value: UpgradeTemporary
+      objectReference: {fileID: 0}
     - target: {fileID: 5659198757396695134, guid: c3947cc6de3aa3243880f5fa44da0c10, type: 3}
       propertyPath: m_text
       value: Upgrade Type 1
@@ -5237,6 +5241,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: UpgradeTemp3
       objectReference: {fileID: 0}
+    - target: {fileID: 4665170599896477548, guid: c3947cc6de3aa3243880f5fa44da0c10, type: 3}
+      propertyPath: m_TagString
+      value: UpgradeTemporary
+      objectReference: {fileID: 0}
     - target: {fileID: 5659198757396695134, guid: c3947cc6de3aa3243880f5fa44da0c10, type: 3}
       propertyPath: m_text
       value: Upgrade Type 3
@@ -5444,6 +5452,10 @@ PrefabInstance:
     - target: {fileID: 4665170599896477548, guid: c3947cc6de3aa3243880f5fa44da0c10, type: 3}
       propertyPath: m_Name
       value: UpgradeTemp2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4665170599896477548, guid: c3947cc6de3aa3243880f5fa44da0c10, type: 3}
+      propertyPath: m_TagString
+      value: UpgradeTemporary
       objectReference: {fileID: 0}
     - target: {fileID: 5659198757396695134, guid: c3947cc6de3aa3243880f5fa44da0c10, type: 3}
       propertyPath: m_text

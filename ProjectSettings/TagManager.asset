@@ -23,6 +23,7 @@ TagManager:
   - unlockTest
   - offline
   - Menu
+  - UpgradeTemporary
   layers:
   - Default
   - TransparentFX
