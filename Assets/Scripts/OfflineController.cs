@@ -16,21 +16,13 @@ public class OfflineController : MonoBehaviour
 
     public LevelController levelController;
     public RewardedAdsButton rewardedAdsButton;
+    public BarController barController;
     private float MHgainsOffline;
     private float timeGainsOffline;
 
     // Start is called before the first frame update
     void Start()
     {
-        levelController = GameObject.Find("Menu").GetComponent<LevelController>();
-        offlinePanel = GameObject.FindGameObjectWithTag("offline");
-        timeAwayText = offlinePanel.transform.Find("timeAwayText")?.GetComponent<TextMeshProUGUI>();
-        MHgains = offlinePanel.transform.Find("MHGains")?.GetComponent<TextMeshProUGUI>();
-        timeGains = offlinePanel.transform.Find("timeGains")?.GetComponent<TextMeshProUGUI>();
-        Time.timeScale = 0;
-        //offlinePanel.SetActive(false);
-
-        rewardedAdsButton = GameObject.Find("Menu").GetComponent<RewardedAdsButton>();
 
     }
 
@@ -41,7 +33,17 @@ public class OfflineController : MonoBehaviour
     }
 
     public void LoadOfflineProduction()
-    {
+    {   
+        levelController = GameObject.Find("Menu").GetComponent<LevelController>();
+        offlinePanel = GameObject.FindGameObjectWithTag("offline");
+        timeAwayText = offlinePanel.transform.Find("timeAwayText")?.GetComponent<TextMeshProUGUI>();
+        MHgains = offlinePanel.transform.Find("MHGains")?.GetComponent<TextMeshProUGUI>();
+        timeGains = offlinePanel.transform.Find("timeGains")?.GetComponent<TextMeshProUGUI>();
+        barController = GameObject.Find("Menu").GetComponent<BarController>();
+        rewardedAdsButton = GameObject.Find("Menu").GetComponent<RewardedAdsButton>();
+
+        Time.timeScale = 0;
+
         if (levelController.offlineProgress){
             offlinePanel.SetActive(true);
             var tempOff = Convert.ToInt64(PlayerPrefs.GetString("offlineTime"));
@@ -89,6 +91,7 @@ public class OfflineController : MonoBehaviour
             levelController.time += timeGainsOffline;
         }
 
+        barController.updateBarTime(levelController.time);
         offlinePanel.SetActive(false);
         Time.timeScale = 1;
     }

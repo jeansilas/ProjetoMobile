@@ -27,7 +27,7 @@ public class LevelController : MonoBehaviour
 
     public float time;
     public float MH;
-    public float coin;
+    public int coin;
 
     public int max_study;
     public int max_project;

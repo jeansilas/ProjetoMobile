@@ -68,9 +68,39 @@ public class CountController : MonoBehaviour
         unlockProject = GameObject.FindGameObjectWithTag("unlockProject");
         unlockTest = GameObject.FindGameObjectWithTag("unlockTest");
 
-        price_test.transform.GetComponent<TextMeshProUGUI>().text = Math.Round(levelController.price_test_MH,0).ToString() + " Mental Health / " + Math.Round(levelController.price_test_time, 2).ToString() + " Time";
-        price_project.transform.GetComponent<TextMeshProUGUI>().text = Math.Round(levelController.price_project_MH,0).ToString() + " Mental Health / " + Math.Round(levelController.price_project_time, 2).ToString() + " Time";
-        price_study.transform.GetComponent<TextMeshProUGUI>().text = Math.Round(levelController.price_study_MH,0).ToString() + " Mental Health / " + Math.Round(levelController.price_study_time, 2).ToString() + " Time";
+        if (levelController.price_study_MH >= 1000 && levelController.study != levelController.max_study){
+            var exponent = Math.Floor(Math.Log10(Math.Abs(levelController.price_study_MH)));
+            var rounded = Math.Round((levelController.price_study_MH) / Math.Pow(10, exponent), 2);
+            price_study.transform.GetComponent<TextMeshProUGUI>().text = rounded.ToString("F2") + "e+" + exponent.ToString() + " Mental Health / " + Math.Round(levelController.price_study_time, 2).ToString() + " Time";
+        } else if (levelController.study == levelController.max_study){
+            price_study.transform.GetComponent<TextMeshProUGUI>().text = "MAX";
+            GameObject.Find("Study").GetComponent<Button>().interactable = false;
+        } else{
+            price_study.transform.GetComponent<TextMeshProUGUI>().text = Math.Round(levelController.price_study_MH,0).ToString() + " Mental Health / " + Math.Round(levelController.price_study_time, 2).ToString() + " Time";
+        }
+
+        if (levelController.price_project_MH >= 1000 && levelController.project != levelController.max_project){
+            var exponent = Math.Floor(Math.Log10(Math.Abs(levelController.price_project_MH)));
+            var rounded = Math.Round((levelController.price_project_MH) / Math.Pow(10, exponent), 2);
+            price_project.transform.GetComponent<TextMeshProUGUI>().text = rounded.ToString("F2") + "e+" + exponent.ToString() + " Mental Health / " + Math.Round(levelController.price_project_time, 2).ToString() + " Time";
+        } else if (levelController.project == levelController.max_project){
+            price_project.transform.GetComponent<TextMeshProUGUI>().text = "MAX";
+            GameObject.Find("Project").GetComponent<Button>().interactable = false;
+        } else{
+            price_project.transform.GetComponent<TextMeshProUGUI>().text = Math.Round(levelController.price_project_MH,0).ToString() + " Mental Health / " + Math.Round(levelController.price_project_time, 2).ToString() + " Time";
+        }
+        
+        if (levelController.price_test_MH >= 1000 && levelController.test != levelController.max_test){
+            var exponent = Math.Floor(Math.Log10(Math.Abs(levelController.price_test_MH)));
+            var rounded = Math.Round((levelController.price_test_MH) / Math.Pow(10, exponent), 2);
+            price_test.transform.GetComponent<TextMeshProUGUI>().text = rounded.ToString("F2") + "e+" + exponent.ToString() + " Mental Health / " + Math.Round(levelController.price_test_time, 2).ToString() + " Time";
+        } else if (levelController.test == levelController.max_test){
+            price_test.transform.GetComponent<TextMeshProUGUI>().text = "MAX";
+            GameObject.Find("Test").GetComponent<Button>().interactable = false;
+        } else{
+            price_test.transform.GetComponent<TextMeshProUGUI>().text = Math.Round(levelController.price_test_MH,0).ToString() + " Mental Health / " + Math.Round(levelController.price_test_time, 2).ToString() + " Time";
+        }
+        
         //updateCountTime(0);
         updateCountMentalHealth(0);        
         updateCountStudy(0);    
@@ -78,8 +108,12 @@ public class CountController : MonoBehaviour
         updateCountTest(0);
         updateCountCoin(0);
 
-        unlockProject.SetActive(!levelController.unlock_project);
-        unlockTest.SetActive(!levelController.unlock_test);
+        if (unlockProject != null){
+            unlockProject.SetActive(!levelController.unlock_project);
+        }
+        if (unlockTest != null){
+            unlockTest.SetActive(!levelController.unlock_test);
+        }
     }
 
     void Update(){ 
@@ -123,6 +157,11 @@ public class CountController : MonoBehaviour
                 unlockProject.SetActive(false);
             }
         } 
+
+        if (levelController.study == levelController.max_study){
+            price_study.transform.GetComponent<TextMeshProUGUI>().text = "MAX";
+            GameObject.Find("Study").GetComponent<Button>().interactable = false;
+        }
     }
 
     public void buyProject(){
@@ -154,9 +193,13 @@ public class CountController : MonoBehaviour
                 levelController.unlock_test = true;
                 unlockTest.SetActive(false);
             }
-        } else if (levelController.project == levelController.max_project){
-            levelController.done_project = true;
         }
+
+        if (levelController.project == levelController.max_project){
+            price_project.transform.GetComponent<TextMeshProUGUI>().text = "MAX";
+            GameObject.Find("Project").GetComponent<Button>().interactable = false;
+        }
+        
     }
 
     public void buyTest(){
@@ -186,9 +229,13 @@ public class CountController : MonoBehaviour
             
             price_test.transform.GetComponent<TextMeshProUGUI>().text = Math.Round(levelController.price_test_MH,0).ToString() + " Mental Health / " + Math.Round(levelController.price_test_time, 2).ToString() + " Time";
 
-        } else if (levelController.test == levelController.max_test){
-            levelController.done_test = true;
         }
+
+        if (levelController.test == levelController.max_test){
+            price_test.transform.GetComponent<TextMeshProUGUI>().text = "MAX";
+            GameObject.Find("Test").GetComponent<Button>().interactable = false;
+        }
+        
     }
 
     public void updateCountMentalHealth(float discreetValue)
@@ -301,6 +348,7 @@ public class CountController : MonoBehaviour
                 // Conversion successful
                 if (intValue + discreetValue >= 0) {
                     count.text = (intValue + discreetValue).ToString();
+                    
                     if (discreetValue > 0){
                         barController.updateBarProject(discreetValue);
                     }
@@ -328,6 +376,7 @@ public class CountController : MonoBehaviour
                 // Conversion successful
                 if (intValue + discreetValue >= 0) {
                     count.text = (intValue + discreetValue).ToString();
+
                     if (discreetValue > 0){
                         barController.updateBarTest(discreetValue);
                     }
@@ -356,6 +405,8 @@ public class CountController : MonoBehaviour
                 // Conversion successful
                 if (intValue + discreetValue >= 0) {
                     count.text = (intValue + discreetValue).ToString();
+                    levelController.coin = intValue + discreetValue;
+                    Debug.Log("Coins: " + levelController.coin);
                 }
             }
             else
