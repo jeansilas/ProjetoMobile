@@ -67,66 +67,107 @@ public class LevelController : MonoBehaviour
 
     public float upgradeTemporaryCoefficient;
 
+    public int upgradeTemporaryType1Amount;
+    public int upgradeTemporaryType2Amount;
+    public int upgradeTemporaryType3Amount;
+
+    public List<Dictionary<string, string>> upgradeTemporaryType1;
+    public List<Dictionary<string, string>> upgradeTemporaryType2;
+    public List<Dictionary<string, string>> upgradeTemporaryType3;
+
+    public List<int> boughtUpgradeTemporaryType1;
+    public List<int> boughtUpgradeTemporaryType2;
+    public List<int> boughtUpgradeTemporaryType3;
+
+    public string stringboughtUpgradeTemporaryType1;
+    public string stringboughtUpgradeTemporaryType2;
+    public string stringboughtUpgradeTemporaryType3;
+
     // Start is called before the first frame update
     void Start()
     {
-        
-        /*
-        level = 1;
-        price_study_MH = 10;
-        price_study_time = 0.5f;
-        price_project_MH = 20;
-        price_project_time = 1;
-        price_test_MH = 30;
-        price_test_time = 1.5f;
-
-        price_study_MH_og = 10;
-        price_study_time_og = 0.5f;
-        price_project_MH_og = 20;
-        price_project_time_og = 1;
-        price_test_MH_og = 30;
-        price_test_time_og = 1.5f;
-
-        study = 0;
-        project = 0;
-        test = 0;
-        MH = 10;
-        time = 1;
-        coin = 0;
-
-        max_study = 150;
-        max_project = 60;
-        max_test = 30;
-
-        max_time = 6;
-        inc_time = 1/60f;
-        inc_MH = 0.5f;
-
-        inc_study = 1.07f;
-        inc_project = 1.1f;
-        inc_test = 1.15f;
-
-        unlock_project = false;
-        unlock_test = false;
-
-        price_MH_upgrade_temporary_type1 = 10;
-        price_MH_upgrade_temporary_type2 = 20;
-        price_MH_upgrade_temporary_type3 = 30;
-
-        price_coin_upgrade_permanent_type1 = 50;
-        price_coin_upgrade_permanent_type2 = 70;
-        price_coin_upgrade_permanent_type3 = 60;
-
-        price_time_upgrade_temporary_type1 = 3.0f;
-        price_time_upgrade_temporary_type2 = 2.5f;
-        price_time_upgrade_temporary_type3 = 3.5f;
-
-        */
         
         
         Load();
         offlineController = GameObject.Find("Menu").GetComponent<OfflineController>();
         offlineController.LoadOfflineProduction();
+
+        upgradeTemporaryType1 = new List<Dictionary<string, string>>();
+        upgradeTemporaryType2 = new List<Dictionary<string, string>>();
+        upgradeTemporaryType3 = new List<Dictionary<string, string>>();
+
+        Dictionary<string, string> upgradeTemporaryType1_1 = new Dictionary<string, string>();
+        Dictionary<string, string> upgradeTemporaryType1_2 = new Dictionary<string, string>();
+
+        Dictionary<string, string> upgradeTemporaryType2_1 = new Dictionary<string, string>();
+        Dictionary<string, string> upgradeTemporaryType2_2 = new Dictionary<string, string>();
+        Dictionary<string, string> upgradeTemporaryType2_3 = new Dictionary<string, string>();
+        Dictionary<string, string> upgradeTemporaryType2_4 = new Dictionary<string, string>();
+        Dictionary<string, string> upgradeTemporaryType2_5 = new Dictionary<string, string>();
+        Dictionary<string, string> upgradeTemporaryType2_6 = new Dictionary<string, string>();
+        Dictionary<string, string> upgradeTemporaryType2_7 = new Dictionary<string, string>();
+
+        Dictionary<string, string> upgradeTemporaryType3_1 = new Dictionary<string, string>();
+        Dictionary<string, string> upgradeTemporaryType3_2 = new Dictionary<string, string>();
+
+        upgradeTemporaryType1_1.Add("Title", "Energetic");
+        upgradeTemporaryType1_1.Add("ContentText", "You are feeling lazy, drink some RedBull and fly away!");
+        upgradeTemporaryType1_1.Add("Icon", "Assets/Resources/Icons/gatinho_pixel.png");
+        
+        upgradeTemporaryType1_2.Add("Title", "a");
+        upgradeTemporaryType1_2.Add("ContentText", "a");
+        upgradeTemporaryType1_2.Add("Icon", "Assets/Resources/Icons/gatinho_pixel.png");
+
+        upgradeTemporaryType2_1.Add("Title", "Tasty Cookie to give you that uplifting feeling");
+        upgradeTemporaryType2_1.Add("ContentText", "You were scrolling through the internet and found a recipe for a cookie that gives you a lot of serotonin. You decide to make it and eat it.");
+        upgradeTemporaryType2_1.Add("Icon", "Assets/Resources/Icons/gatinho_pixel.png");
+
+        upgradeTemporaryType2_2.Add("Title", "Break Time");
+        upgradeTemporaryType2_2.Add("ContentText", "As the Pomodoro technique says: Sometimes, a break is better than pushing too hard with your studies.");
+        upgradeTemporaryType2_2.Add("Icon", "Assets/Resources/Icons/gatinho_pixel.png");
+
+        upgradeTemporaryType2_3.Add("Title", "Plant");
+        upgradeTemporaryType2_3.Add("ContentText", "A plant is a nice friend to have, it makes you feel better and it is a nice decoration for your room.");
+        upgradeTemporaryType2_3.Add("Icon", "Assets/Resources/Icons/gatinho_pixel.png");
+
+        upgradeTemporaryType2_4.Add("Title", "Man's Best Friend");
+        upgradeTemporaryType2_4.Add("ContentText", "Your friend passed by your house and brought along his cute puppy, play a bit with it and feel better.");
+        upgradeTemporaryType2_4.Add("Icon", "Assets/Resources/Icons/gatinho_pixel.png");
+
+        upgradeTemporaryType2_5.Add("Title", "Cutest thing in the world");
+        upgradeTemporaryType2_5.Add("ContentText", "You have the opportunity to have a cat in your lap, and you take it. You pet it and feel better.");
+        upgradeTemporaryType2_5.Add("Icon", "Assets/Resources/Icons/gatinho_pixel.png");
+
+        upgradeTemporaryType2_6.Add("Title", "a");
+        upgradeTemporaryType2_6.Add("ContentText", "a");
+        upgradeTemporaryType2_6.Add("Icon", "Assets/Resources/Icons/gatinho_pixel.png");
+
+        upgradeTemporaryType2_7.Add("Title", "a");
+        upgradeTemporaryType2_7.Add("ContentText", "a");
+        upgradeTemporaryType2_7.Add("Icon", "Assets/Resources/Icons/gatinho_pixel.png");
+
+        upgradeTemporaryType3_1.Add("Title", "Study Group");
+        upgradeTemporaryType3_1.Add("ContentText", "You are feeling lonely, call your clever friends and study together.");
+        upgradeTemporaryType3_1.Add("Icon", "Assets/Resources/Icons/gatinho_pixel.png");
+
+        upgradeTemporaryType3_2.Add("Title", "a");
+        upgradeTemporaryType3_2.Add("ContentText", "a");
+        upgradeTemporaryType3_2.Add("Icon", "Assets/Resources/Icons/gatinho_pixel.png");
+
+        upgradeTemporaryType1.Add(upgradeTemporaryType1_1);
+        upgradeTemporaryType1.Add(upgradeTemporaryType1_2);
+
+        upgradeTemporaryType2.Add(upgradeTemporaryType2_1);
+        upgradeTemporaryType2.Add(upgradeTemporaryType2_2);
+        upgradeTemporaryType2.Add(upgradeTemporaryType2_3);
+        upgradeTemporaryType2.Add(upgradeTemporaryType2_4);
+        upgradeTemporaryType2.Add(upgradeTemporaryType2_5);
+        upgradeTemporaryType2.Add(upgradeTemporaryType2_6);
+        upgradeTemporaryType2.Add(upgradeTemporaryType2_7);
+
+        upgradeTemporaryType3.Add(upgradeTemporaryType3_1);
+        upgradeTemporaryType3.Add(upgradeTemporaryType3_2);
+
     }
 
     // Update is called once per frame
@@ -190,10 +231,43 @@ public class LevelController : MonoBehaviour
         price_coin_upgrade_permanent_type3 = PlayerPrefs.GetInt("price_coin_upgrade_permanent_type3", 60);
 
         price_time_upgrade_temporary_type1 = PlayerPrefs.GetFloat("price_time_upgrade_temporary_type1", 3.0f);
-        price_time_upgrade_temporary_type2 = PlayerPrefs.GetFloat("price_time_upgrade_temporary_type2", 2.5f);
+        price_time_upgrade_temporary_type2 = PlayerPrefs.GetFloat("price_time_upgrade_temporary_type2", 0f);
         price_time_upgrade_temporary_type3 = PlayerPrefs.GetFloat("price_time_upgrade_temporary_type3", 3.5f);
 
         upgradeTemporaryCoefficient = PlayerPrefs.GetFloat("upgradeTemporaryCoefficient", 3.77f);
+
+        upgradeTemporaryType1Amount = PlayerPrefs.GetInt("upgradeTemporaryType1Amount", 1);
+        upgradeTemporaryType2Amount = PlayerPrefs.GetInt("upgradeTemporaryType2Amount", 5);
+        upgradeTemporaryType3Amount = PlayerPrefs.GetInt("upgradeTemporaryType3Amount", 1);
+
+        string[] stringArray1 = stringboughtUpgradeTemporaryType1.Split(',');
+        string[] stringArray2 = stringboughtUpgradeTemporaryType2.Split(',');
+        string[] stringArray3 = stringboughtUpgradeTemporaryType3.Split(',');
+
+        foreach (string str in stringArray1)
+        {
+            if (int.TryParse(str, out int number))
+            {
+                boughtUpgradeTemporaryType1.Add(number);
+            }
+        }
+
+        foreach (string str in stringArray2)
+        {
+            if (int.TryParse(str, out int number))
+            {
+                boughtUpgradeTemporaryType2.Add(number);
+            }
+        }
+
+        foreach (string str in stringArray3)
+        {
+            if (int.TryParse(str, out int number))
+            {
+                boughtUpgradeTemporaryType3.Add(number);
+            }
+        }
+
 
     }
 
@@ -251,6 +325,21 @@ public class LevelController : MonoBehaviour
         PlayerPrefs.SetFloat("price_time_upgrade_temporary_type1", price_time_upgrade_temporary_type1);
         PlayerPrefs.SetFloat("price_time_upgrade_temporary_type2", price_time_upgrade_temporary_type2);
         PlayerPrefs.SetFloat("price_time_upgrade_temporary_type3", price_time_upgrade_temporary_type3);
+
+        PlayerPrefs.SetFloat("upgradeTemporaryCoefficient", upgradeTemporaryCoefficient);
+
+        PlayerPrefs.SetInt("upgradeTemporaryType1Amount", upgradeTemporaryType1Amount);
+        PlayerPrefs.SetInt("upgradeTemporaryType2Amount", upgradeTemporaryType2Amount);
+        PlayerPrefs.SetInt("upgradeTemporaryType3Amount", upgradeTemporaryType3Amount);
+
+        stringboughtUpgradeTemporaryType1 = string.Join(",", boughtUpgradeTemporaryType1.ToString());
+        PlayerPrefs.SetString("boughtUpgradeTemporaryType1", stringboughtUpgradeTemporaryType1);
+
+        stringboughtUpgradeTemporaryType2 = string.Join(",", boughtUpgradeTemporaryType2.ToString());
+        PlayerPrefs.SetString("boughtUpgradeTemporaryType2", stringboughtUpgradeTemporaryType2);
+
+        stringboughtUpgradeTemporaryType3 = string.Join(",", boughtUpgradeTemporaryType3.ToString());
+        PlayerPrefs.SetString("boughtUpgradeTemporaryType3", stringboughtUpgradeTemporaryType3);
 
         PlayerPrefs.Save();
 

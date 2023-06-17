@@ -9,6 +9,10 @@ public class PopUpController : MonoBehaviour
     public void Activating(GameObject obj)
     {
         obj.SetActive(true);
+
+        if (obj.name == "UpgradeTemporaryPanel"){
+            GameObject.Find("Menu").GetComponent<CountController>().InstantiateUpgradeTemporary();
+        }
         
     }
 
