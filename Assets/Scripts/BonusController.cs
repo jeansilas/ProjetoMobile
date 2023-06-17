@@ -31,11 +31,11 @@ public class BonusController : MonoBehaviour
     void Update(){
         timer += Time.deltaTime;
         //12000
-        if (show == false && timer >= 20){
+        if (show == false && timer >= 12000){
             show = true;
             rand = Random.Range(0, 10);
 
-            if (rand >= 11){
+            if (rand >= 7){
                 bonusPanel.transform.Find("Bonus").GetComponent<TextMeshProUGUI>().text = "15 minutes boost";
             } else {
                 bonusPanel.transform.Find("Bonus").GetComponent<TextMeshProUGUI>().text = "10 coins";
@@ -46,7 +46,7 @@ public class BonusController : MonoBehaviour
         }
 
         //3600
-        if (show && timer >= 15){
+        if (show && timer >= 3600){
             bonusPanel.SetActive(false);
             show = false;
             timer = 0;
@@ -56,7 +56,7 @@ public class BonusController : MonoBehaviour
     public void Bonus()
     {
         rewardedAdsButton.ShowAd();
-        if (rand >= 11){
+        if (rand >= 7){
             levelController.MH += 900*levelController.inc_MH;
             levelController.time += 900*levelController.inc_time;
             if (levelController.time >= levelController.max_time){
