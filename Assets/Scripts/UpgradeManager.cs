@@ -21,5 +21,6 @@ public class UpgradeManager : MonoBehaviour
     public void UpgradeClick(int type)
     {
         countController.upgradeTemporary(type);
+        
     }
 }

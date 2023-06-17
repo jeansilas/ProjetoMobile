@@ -58,8 +58,6 @@ public class LevelController : MonoBehaviour
     public int price_MH_upgrade_temporary_type3;
 
     public int price_coin_upgrade_permanent_type1;
-    public int price_coin_upgrade_permanent_type2;
-    public int price_coin_upgrade_permanent_type3;
 
     public float price_time_upgrade_temporary_type1;
     public float price_time_upgrade_temporary_type2;
@@ -71,17 +69,25 @@ public class LevelController : MonoBehaviour
     public int upgradeTemporaryType2Amount;
     public int upgradeTemporaryType3Amount;
 
+    public int upgradePermanentType1Amount;
+
     public List<Dictionary<string, string>> upgradeTemporaryType1;
     public List<Dictionary<string, string>> upgradeTemporaryType2;
     public List<Dictionary<string, string>> upgradeTemporaryType3;
+
+    public List<Dictionary<string, string>> upgradePermanentType1;
 
     public List<int> boughtUpgradeTemporaryType1;
     public List<int> boughtUpgradeTemporaryType2;
     public List<int> boughtUpgradeTemporaryType3;
 
+    public List<int> boughtUpgradePermanentType1;
+
     public string stringboughtUpgradeTemporaryType1;
     public string stringboughtUpgradeTemporaryType2;
     public string stringboughtUpgradeTemporaryType3;
+
+    public string stringboughtUpgradePermanentType1;
 
     // Start is called before the first frame update
     void Start()
@@ -96,9 +102,10 @@ public class LevelController : MonoBehaviour
         upgradeTemporaryType2 = new List<Dictionary<string, string>>();
         upgradeTemporaryType3 = new List<Dictionary<string, string>>();
 
+        upgradePermanentType1 = new List<Dictionary<string, string>>();
+
         Dictionary<string, string> upgradeTemporaryType1_1 = new Dictionary<string, string>();
         Dictionary<string, string> upgradeTemporaryType1_2 = new Dictionary<string, string>();
-
         Dictionary<string, string> upgradeTemporaryType2_1 = new Dictionary<string, string>();
         Dictionary<string, string> upgradeTemporaryType2_2 = new Dictionary<string, string>();
         Dictionary<string, string> upgradeTemporaryType2_3 = new Dictionary<string, string>();
@@ -109,6 +116,9 @@ public class LevelController : MonoBehaviour
 
         Dictionary<string, string> upgradeTemporaryType3_1 = new Dictionary<string, string>();
         Dictionary<string, string> upgradeTemporaryType3_2 = new Dictionary<string, string>();
+
+        Dictionary<string, string> upgradePermanentType1_1 = new Dictionary<string, string>();
+        Dictionary<string, string> upgradePermanentType1_2 = new Dictionary<string, string>();
 
         upgradeTemporaryType1_1.Add("Title", "Energetic");
         upgradeTemporaryType1_1.Add("ContentText", "You are feeling lazy, drink some RedBull and fly away!");
@@ -154,6 +164,14 @@ public class LevelController : MonoBehaviour
         upgradeTemporaryType3_2.Add("ContentText", "a");
         upgradeTemporaryType3_2.Add("Icon", "Assets/Resources/Icons/gatinho_pixel.png");
 
+        upgradePermanentType1_1.Add("Title", "a");
+        upgradePermanentType1_1.Add("ContentText", "a");
+        upgradePermanentType1_1.Add("Icon", "Assets/Resources/Icons/gatinho_pixel.png");
+
+        upgradePermanentType1_2.Add("Title", "a");
+        upgradePermanentType1_2.Add("ContentText", "a");
+        upgradePermanentType1_2.Add("Icon", "Assets/Resources/Icons/gatinho_pixel.png");
+
         upgradeTemporaryType1.Add(upgradeTemporaryType1_1);
         upgradeTemporaryType1.Add(upgradeTemporaryType1_2);
 
@@ -167,6 +185,9 @@ public class LevelController : MonoBehaviour
 
         upgradeTemporaryType3.Add(upgradeTemporaryType3_1);
         upgradeTemporaryType3.Add(upgradeTemporaryType3_2);
+
+        upgradePermanentType1.Add(upgradePermanentType1_1);
+        upgradePermanentType1.Add(upgradePermanentType1_2);
 
     }
 
@@ -227,8 +248,6 @@ public class LevelController : MonoBehaviour
         price_MH_upgrade_temporary_type3 = PlayerPrefs.GetInt("price_MH_upgrade_temporary_type3", 30);
 
         price_coin_upgrade_permanent_type1 = PlayerPrefs.GetInt("price_coin_upgrade_permanent_type1", 50);
-        price_coin_upgrade_permanent_type2 = PlayerPrefs.GetInt("price_coin_upgrade_permanent_type2", 70);
-        price_coin_upgrade_permanent_type3 = PlayerPrefs.GetInt("price_coin_upgrade_permanent_type3", 60);
 
         price_time_upgrade_temporary_type1 = PlayerPrefs.GetFloat("price_time_upgrade_temporary_type1", 3.0f);
         price_time_upgrade_temporary_type2 = PlayerPrefs.GetFloat("price_time_upgrade_temporary_type2", 0f);
@@ -240,9 +259,13 @@ public class LevelController : MonoBehaviour
         upgradeTemporaryType2Amount = PlayerPrefs.GetInt("upgradeTemporaryType2Amount", 5);
         upgradeTemporaryType3Amount = PlayerPrefs.GetInt("upgradeTemporaryType3Amount", 1);
 
+        upgradePermanentType1Amount = PlayerPrefs.GetInt("upgradePermanentType1Amount", 2);
+
         string[] stringArray1 = stringboughtUpgradeTemporaryType1.Split(',');
         string[] stringArray2 = stringboughtUpgradeTemporaryType2.Split(',');
         string[] stringArray3 = stringboughtUpgradeTemporaryType3.Split(',');
+
+        string[] stringArray1P = stringboughtUpgradePermanentType1.Split(',');
 
         foreach (string str in stringArray1)
         {
@@ -265,6 +288,14 @@ public class LevelController : MonoBehaviour
             if (int.TryParse(str, out int number))
             {
                 boughtUpgradeTemporaryType3.Add(number);
+            }
+        }
+
+        foreach (string str in stringArray1P)
+        {
+            if (int.TryParse(str, out int number))
+            {
+                boughtUpgradePermanentType1.Add(number);
             }
         }
 
@@ -319,8 +350,6 @@ public class LevelController : MonoBehaviour
         PlayerPrefs.SetInt("price_MH_upgrade_temporary_type3", price_MH_upgrade_temporary_type3);
 
         PlayerPrefs.SetInt("price_coin_upgrade_permanent_type1", price_coin_upgrade_permanent_type1);
-        PlayerPrefs.SetInt("price_coin_upgrade_permanent_type2", price_coin_upgrade_permanent_type2);
-        PlayerPrefs.SetInt("price_coin_upgrade_permanent_type3", price_coin_upgrade_permanent_type3);
 
         PlayerPrefs.SetFloat("price_time_upgrade_temporary_type1", price_time_upgrade_temporary_type1);
         PlayerPrefs.SetFloat("price_time_upgrade_temporary_type2", price_time_upgrade_temporary_type2);
@@ -332,6 +361,8 @@ public class LevelController : MonoBehaviour
         PlayerPrefs.SetInt("upgradeTemporaryType2Amount", upgradeTemporaryType2Amount);
         PlayerPrefs.SetInt("upgradeTemporaryType3Amount", upgradeTemporaryType3Amount);
 
+        PlayerPrefs.SetInt("upgradePermanentType1Amount", upgradePermanentType1Amount);
+
         stringboughtUpgradeTemporaryType1 = string.Join(",", boughtUpgradeTemporaryType1.ToString());
         PlayerPrefs.SetString("boughtUpgradeTemporaryType1", stringboughtUpgradeTemporaryType1);
 
@@ -340,6 +371,9 @@ public class LevelController : MonoBehaviour
 
         stringboughtUpgradeTemporaryType3 = string.Join(",", boughtUpgradeTemporaryType3.ToString());
         PlayerPrefs.SetString("boughtUpgradeTemporaryType3", stringboughtUpgradeTemporaryType3);
+
+        stringboughtUpgradePermanentType1 = string.Join(",", boughtUpgradePermanentType1.ToString());
+        PlayerPrefs.SetString("boughtUpgradePermanentType1", stringboughtUpgradePermanentType1);
 
         PlayerPrefs.Save();
 
