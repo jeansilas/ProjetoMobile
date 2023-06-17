@@ -24,6 +24,7 @@ public class AdsInitializer : MonoBehaviour, IUnityAdsInitializationListener
     #elif UNITY_EDITOR
             _gameId = _androidGameId; //Only for testing the functionality in the Editor
     #endif
+
         if (!Advertisement.isInitialized && Advertisement.isSupported)
         {
             Advertisement.Initialize(_gameId, _testMode, this);

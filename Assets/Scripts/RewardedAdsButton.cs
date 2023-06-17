@@ -8,8 +8,6 @@ public class RewardedAdsButton : MonoBehaviour, IUnityAdsLoadListener, IUnityAds
     [SerializeField] string _androidAdUnitId = "Rewarded_Android";
     [SerializeField] string _iOSAdUnitId = "Rewarded_iOS";
     string _adUnitId = null; // This will remain null for unsupported platforms
-    bool _isButtonClickable = false; // Control variable for button clickability
-    float _timeSinceAdShown = 0f; // Time since the ad was last shown
 
     [SerializeField] Text _adsCountText;
     int _adsCount = 0;
@@ -24,22 +22,15 @@ public class RewardedAdsButton : MonoBehaviour, IUnityAdsLoadListener, IUnityAds
         _adUnitId = _androidAdUnitId;
 #endif
 
+        Debug.Log("Unity Ads Rewarded Ad Unit: " + _adUnitId);
+
         // Disable the button until the ad is ready to show:
         _showAdButton.interactable = false;
     }
 
     void Update()
     {
-        // Check if the button can be clickable again after 30 seconds
-        if (!_isButtonClickable)
-        {
-            _timeSinceAdShown += Time.deltaTime;
-            if (_timeSinceAdShown >= 30f)
-            {
-                _isButtonClickable = true;
-                _showAdButton.interactable = true;
-            }
-        }
+        
     }
 
     // Call this public method when you want to get an ad ready to show.
@@ -71,10 +62,6 @@ public class RewardedAdsButton : MonoBehaviour, IUnityAdsLoadListener, IUnityAds
         _showAdButton.interactable = false;
         // Then show the ad:
         Advertisement.Show(_adUnitId, this);
-
-        // Reset the timer and disable the button
-        _timeSinceAdShown = 0f;
-        _isButtonClickable = false;
     }
 
     // Implement the Show Listener's OnUnityAdsShowComplete callback method to determine if the user gets a reward:
@@ -87,7 +74,6 @@ public class RewardedAdsButton : MonoBehaviour, IUnityAdsLoadListener, IUnityAds
 
             _adsCount++;
             // Atualizar o texto do componente de texto
-            _adsCountText.text = "Ads vistos: " + _adsCount.ToString();
         }
     }
 
