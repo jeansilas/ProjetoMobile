@@ -6,6 +6,7 @@ using TMPro;
 using System.Linq;
 using System;
 
+
 // Reference for scientific notation: https://www.youtube.com/watch?v=DXjgMOee1Eg&list=PLGSUBi8nI9v9I5uaSRe8ccSV02W2dyxGM&index=7
 // Reference for formulas: https://blog.kongregate.com/the-math-of-idle-games-part-i/
 
@@ -437,12 +438,10 @@ public class CountController : MonoBehaviour
 
     public void upgradeTemporary(int type) {
 
-        Debug.Log("Temporary Upgrade");
         
         if (type == 1) { // type1: Aumenta a quantidade de tempo exemplo:  vai de 3h para 6h (Absoluto)
             int MH = levelController.price_MH_upgrade_temporary_type1;
             float time = levelController.price_time_upgrade_temporary_type1;
-            Debug.Log("Tipo 1");
             if (levelController.MH < MH || levelController.time < time){
             return;
             }
@@ -454,17 +453,17 @@ public class CountController : MonoBehaviour
             }
         }
 
-        else if (type == 2) { // type2: Aumenta a taxa de crescimento do "time do jogo". por exemplo ele vai ganhar 1 time a cada 10 min ao invés de 20 min (Taxa/percentual)
-            int MH = levelController.price_MH_upgrade_temporary_type2;
+        else if (type == 2) { // type2: Aumenta a taxa de ganho de Mental Health por tempo. Ao invés de ganhar 0.5 MH por minuto, ganha 1 MH por minuto   (Taxa/percentual)
+           int MH = levelController.price_MH_upgrade_temporary_type2;
             float time = levelController.price_time_upgrade_temporary_type2;
             if (levelController.MH < MH || levelController.time < time){
-            return;
+                return;
             }
 
             else {
                 updateCountMentalHealth(-MH);
                 updateCountTime(-time);
-                levelController.inc_time = levelController.inc_time*4;
+                levelController.inc_MH = levelController.inc_MH*2;
             }
 
         }
@@ -486,19 +485,7 @@ public class CountController : MonoBehaviour
 
     public void InstantiateUpgradeTemporary() {
         
-      //  foreach (GameObject upgrade in UpgradesTemporary)
-      //  {
-      // private GameObject Title;
-      // private GameObject ContentText;
-      //  private GameObject Icon;
-
-      //  Title = transform.GetChild(2);
-
-        
-       // Title.GetComponent<TextMeshProUGUI>().text = "Teste Funcionou";
-       // ContentText.GetComponent<TextMeshProUGUI>().text = "Teste Funcionou2";
-        //Icon.GetComponent<Image>().sprite = Resources.Load<Sprite>("Sprites/Icon/Icon_MH");
-        //}
+     
         int i = 0;
         foreach (GameObject upgrade in upgradesTemporary) {
             Transform Title;
@@ -514,14 +501,35 @@ public class CountController : MonoBehaviour
             ContentText = upgrade.transform.Find("ContentText");
             ContentText.GetComponent<TextMeshProUGUI>().text = UpgradeObjects[i].ContentText;
 
-            TimeCount = upgrade.transform.Find("Cost").transform.Find("Time").transform.Find("TimeCount");
-            TimeCount.GetComponent<TextMeshProUGUI>().text = UpgradeObjects[i].TimeValue.ToString();
-
-            MentalHealthCount = upgrade.transform.Find("Cost").transform.Find("MentalHealth").transform.Find("MentalHealthCount");
-            MentalHealthCount.GetComponent<TextMeshProUGUI>().text = UpgradeObjects[i].MHValue.ToString();
-
             Icon = upgrade.transform.Find("Icon");
             Icon.GetComponent<Image>().sprite = UpgradeObjects[i].Icon;
+
+            TimeCount = upgrade.transform.Find("Cost").transform.Find("Time").transform.Find("TimeCount");
+            //TimeCount.GetComponent<TextMeshProUGUI>().text = UpgradeObjects[i].TimeValue.ToString();
+
+            MentalHealthCount = upgrade.transform.Find("Cost").transform.Find("MentalHealth").transform.Find("MentalHealthCount");
+            //MentalHealthCount.GetComponent<TextMeshProUGUI>().text = UpgradeObjects[i].MHValue.ToString();
+
+            if (UpgradeObjects[i].type == 2) {
+                Time = levelController.price_time_upgrade_temporary_type2*Math.pow(levelController.upgradeTemporaryCoefficient,UpgradeObjects[i].TimeValue);
+                MH = levelController.price_MH_upgrade_temporary_type2*Math.pow(levelController.upgradeTemporaryCoefficient,UpgradeObjects[i].MHValue);
+            }
+
+            if (UpgradeObjects[i].type == 3) {
+                Time = levelController.price_time_upgrade_temporary_type3*Math.pow(levelController.upgradeTemporaryCoefficient,UpgradeObjects[i].TimeValue);
+                MH = levelController.price_MH_upgrade_temporary_type3*Math.pow(levelController.upgradeTemporaryCoefficient,UpgradeObjects[i].MHValue);
+            }
+
+            if (UpgradeObjects[i].type == 1) {
+                Time = levelController.price_time_upgrade_temporary_type1*Math.pow(levelController.upgradeTemporaryCoefficient,UpgradeObjects[i].TimeValue);
+                MH = levelController.price_MH_upgrade_temporary_type1*Math.pow(levelController.upgradeTemporaryCoefficient,UpgradeObjects[i].MHValue);
+            }
+
+            TimeCount.GetComponent<TextMeshProUGUI>().text = Time.ToString();
+            MentalHealthCount.GetComponent<TextMeshProUGUI>().text = MH.ToString();
+    
+
+            
 
 
             i++;

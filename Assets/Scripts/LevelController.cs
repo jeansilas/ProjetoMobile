@@ -65,6 +65,8 @@ public class LevelController : MonoBehaviour
     public float price_time_upgrade_temporary_type2;
     public float price_time_upgrade_temporary_type3;
 
+    public float upgradeTemporaryCoefficient;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -190,6 +192,8 @@ public class LevelController : MonoBehaviour
         price_time_upgrade_temporary_type1 = PlayerPrefs.GetFloat("price_time_upgrade_temporary_type1", 3.0f);
         price_time_upgrade_temporary_type2 = PlayerPrefs.GetFloat("price_time_upgrade_temporary_type2", 2.5f);
         price_time_upgrade_temporary_type3 = PlayerPrefs.GetFloat("price_time_upgrade_temporary_type3", 3.5f);
+
+        upgradeTemporaryCoefficient = PlayerPrefs.GetFloat("upgradeTemporaryCoefficient", 3.77f);
 
     }
 
