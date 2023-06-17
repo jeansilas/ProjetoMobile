@@ -24,6 +24,7 @@ TagManager:
   - offline
   - Menu
   - UpgradeTemporary
+  - bonus
   layers:
   - Default
   - TransparentFX

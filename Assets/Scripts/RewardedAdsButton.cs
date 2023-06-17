@@ -74,7 +74,6 @@ public class RewardedAdsButton : MonoBehaviour, IUnityAdsLoadListener, IUnityAds
 
             _adsCount++;
             // Atualizar o texto do componente de texto
-            _adsCountText.text = "Ads vistos: " + _adsCount.ToString();
         }
     }
 
