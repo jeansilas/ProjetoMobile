@@ -6,16 +6,19 @@ using System.Collections.Generic;
 public class TrocaDeMusicas : MonoBehaviour
 {
     public Button botaoProximaMusica;
+    public Button botaoPausa;
     public AudioSource audioSource;
     public TextMeshProUGUI nomeMusicaText;
     public List<MusicInfo> musicas = new List<MusicInfo>();
 
     private int indiceMusicaAtual = 0;
+    private bool pausado = false;
 
     private void Start()
     {
-        // Associe o método TrocarMusica ao clique do botão
+        // Associe os métodos aos eventos de clique dos botões
         botaoProximaMusica.onClick.AddListener(TrocarMusica);
+        botaoPausa.onClick.AddListener(PausarOuRetomarMusica);
 
         // Verifica se há músicas na lista
         if (musicas.Count > 0)
@@ -51,6 +54,22 @@ public class TrocaDeMusicas : MonoBehaviour
 
             // Atualize o texto com o nome da música atual
             nomeMusicaText.text = musicas[indiceMusicaAtual].nome;
+        }
+    }
+
+    private void PausarOuRetomarMusica()
+    {
+        if (pausado)
+        {
+            // Se já estiver pausado, retome a reprodução
+            audioSource.UnPause();
+            pausado = false;
+        }
+        else
+        {
+            // Caso contrário, pause a reprodução
+            audioSource.Pause();
+            pausado = true;
         }
     }
 }
