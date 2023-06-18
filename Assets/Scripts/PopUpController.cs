@@ -13,6 +13,10 @@ public class PopUpController : MonoBehaviour
         if (obj.name == "UpgradeTemporaryPanel"){
             GameObject.Find("Menu").GetComponent<CountController>().InstantiateUpgradeTemporary();
         }
+
+        if (obj.name == "UpgradePermanentPanel"){
+            GameObject.Find("Menu").GetComponent<CountController>().InstantiateUpgradePermanent();
+        }
         
     }
 
