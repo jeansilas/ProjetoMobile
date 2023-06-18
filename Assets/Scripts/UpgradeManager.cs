@@ -18,7 +18,7 @@ public class UpgradeManager : MonoBehaviour
         
     }
 
-    public void UpgradeClick(int type)
+    public void UpgradeClick(GameObject type)
     {
         countController.upgradeTemporary(type);
         
