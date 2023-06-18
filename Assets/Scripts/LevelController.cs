@@ -86,8 +86,6 @@ public class LevelController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
-        PlayerPrefs.DeleteAll();
         Load();
         offlineController = GameObject.Find("Menu").GetComponent<OfflineController>();
         offlineController.LoadOfflineProduction();
