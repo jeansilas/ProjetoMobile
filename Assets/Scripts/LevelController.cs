@@ -83,12 +83,6 @@ public class LevelController : MonoBehaviour
 
     public List<int> boughtUpgradePermanentType1;
 
-    public string stringboughtUpgradeTemporaryType1;
-    public string stringboughtUpgradeTemporaryType2;
-    public string stringboughtUpgradeTemporaryType3;
-
-    public string stringboughtUpgradePermanentType1;
-
     // Start is called before the first frame update
     void Start()
     {
@@ -189,6 +183,8 @@ public class LevelController : MonoBehaviour
         upgradePermanentType1.Add(upgradePermanentType1_1);
         upgradePermanentType1.Add(upgradePermanentType1_2);
 
+        upgradePermanentType1Amount = 2;
+
     }
 
     // Update is called once per frame
@@ -261,45 +257,6 @@ public class LevelController : MonoBehaviour
 
         upgradePermanentType1Amount = PlayerPrefs.GetInt("upgradePermanentType1Amount", 2);
 
-        string[] stringArray1 = stringboughtUpgradeTemporaryType1.Split(',');
-        string[] stringArray2 = stringboughtUpgradeTemporaryType2.Split(',');
-        string[] stringArray3 = stringboughtUpgradeTemporaryType3.Split(',');
-
-        string[] stringArray1P = stringboughtUpgradePermanentType1.Split(',');
-
-        foreach (string str in stringArray1)
-        {
-            if (int.TryParse(str, out int number))
-            {
-                boughtUpgradeTemporaryType1.Add(number);
-            }
-        }
-
-        foreach (string str in stringArray2)
-        {
-            if (int.TryParse(str, out int number))
-            {
-                boughtUpgradeTemporaryType2.Add(number);
-            }
-        }
-
-        foreach (string str in stringArray3)
-        {
-            if (int.TryParse(str, out int number))
-            {
-                boughtUpgradeTemporaryType3.Add(number);
-            }
-        }
-
-        foreach (string str in stringArray1P)
-        {
-            if (int.TryParse(str, out int number))
-            {
-                boughtUpgradePermanentType1.Add(number);
-            }
-        }
-
-
     }
 
     public void Save()
@@ -357,23 +314,11 @@ public class LevelController : MonoBehaviour
 
         PlayerPrefs.SetFloat("upgradeTemporaryCoefficient", upgradeTemporaryCoefficient);
 
-        PlayerPrefs.SetInt("upgradeTemporaryType1Amount", upgradeTemporaryType1Amount);
-        PlayerPrefs.SetInt("upgradeTemporaryType2Amount", upgradeTemporaryType2Amount);
-        PlayerPrefs.SetInt("upgradeTemporaryType3Amount", upgradeTemporaryType3Amount);
+        PlayerPrefs.SetInt("upgradeTemporaryType1Amount", upgradeTemporaryType1Amount-boughtUpgradeTemporaryType1.Count);
+        PlayerPrefs.SetInt("upgradeTemporaryType2Amount", upgradeTemporaryType2Amount-boughtUpgradeTemporaryType2.Count);
+        PlayerPrefs.SetInt("upgradeTemporaryType3Amount", upgradeTemporaryType3Amount-boughtUpgradeTemporaryType3.Count);
 
-        PlayerPrefs.SetInt("upgradePermanentType1Amount", upgradePermanentType1Amount);
-
-        stringboughtUpgradeTemporaryType1 = string.Join(",", boughtUpgradeTemporaryType1.ToString());
-        PlayerPrefs.SetString("boughtUpgradeTemporaryType1", stringboughtUpgradeTemporaryType1);
-
-        stringboughtUpgradeTemporaryType2 = string.Join(",", boughtUpgradeTemporaryType2.ToString());
-        PlayerPrefs.SetString("boughtUpgradeTemporaryType2", stringboughtUpgradeTemporaryType2);
-
-        stringboughtUpgradeTemporaryType3 = string.Join(",", boughtUpgradeTemporaryType3.ToString());
-        PlayerPrefs.SetString("boughtUpgradeTemporaryType3", stringboughtUpgradeTemporaryType3);
-
-        stringboughtUpgradePermanentType1 = string.Join(",", boughtUpgradePermanentType1.ToString());
-        PlayerPrefs.SetString("boughtUpgradePermanentType1", stringboughtUpgradePermanentType1);
+        PlayerPrefs.SetInt("upgradePermanentType1Amount", upgradePermanentType1Amount - boughtUpgradePermanentType1.Count);
 
         PlayerPrefs.Save();
 

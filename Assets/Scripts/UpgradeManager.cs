@@ -18,8 +18,9 @@ public class UpgradeManager : MonoBehaviour
         
     }
 
-    public void UpgradeClick(GameObject type)
+    public void OnClick(GameObject type)
     {
+        Debug.Log("UpgradeManager: " + type.name);
         countController.upgradeTemporary(type);
         Destroy(gameObject);
         

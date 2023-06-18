@@ -24,6 +24,9 @@ TagManager:
   - UpgradeTemporary
   - bonus
   - offline
+  - UpgradeTemporaryType1
+  - UpgradeTemporaryType2
+  - UpgradeTemporaryType3
   layers:
   - Default
   - TransparentFX

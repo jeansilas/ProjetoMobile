@@ -11,11 +11,19 @@ public class PopUpController : MonoBehaviour
         obj.SetActive(true);
 
         if (obj.name == "UpgradeTemporaryPanel"){
-            GameObject.Find("Menu").GetComponent<CountController>().InstantiateUpgradeTemporary();
+            
+            if(GameObject.Find("Menu").GetComponent<CountController>().int_temp == false){
+                GameObject.Find("Menu").GetComponent<CountController>().InstantiateUpgradeTemporary();
+                GameObject.Find("Menu").GetComponent<CountController>().int_temp = true;
+            }
         }
 
+        Debug.Log(obj.name);
         if (obj.name == "UpgradePermanentPanel"){
-            GameObject.Find("Menu").GetComponent<CountController>().InstantiateUpgradePermanent();
+            if(GameObject.Find("Menu").GetComponent<CountController>().int_perm == false){
+                GameObject.Find("Menu").GetComponent<CountController>().InstantiateUpgradePermanent();
+                GameObject.Find("Menu").GetComponent<CountController>().int_perm = true;
+            }
         }
         
     }

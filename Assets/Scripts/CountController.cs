@@ -17,7 +17,6 @@ public class CountController : MonoBehaviour
     private string tagStudy = "CountStudy";
     private string tagProject = "CountProject";
     private string tagTest = "CountTest";
-    private string tagUpgradeTemporary = "UpgradeTemporary";
     private string tagPopUp = "Settings";
 
     private TextMeshProUGUI[] CountTime;
@@ -40,6 +39,8 @@ public class CountController : MonoBehaviour
     private LevelController levelController;
     private BarController barController;
     private float timer;
+    public bool int_temp = false;
+    public bool int_perm = false;
     // Start is called before the first frame update
     void Start(){
 
@@ -422,19 +423,24 @@ public class CountController : MonoBehaviour
 
     public void upgradeTemporary(GameObject upgrade) {
 
+        int j = -1;
         string type = upgrade.tag;
         GameObject Title = upgrade.transform.Find("Title").gameObject;
         float MH = 0;
         float time = 0;
         
-        if (type == "UpgradeTemporary1") { // type1: Reduce MH costs
-            for (int i = 0; i < levelController.upgradeTemporaryType1.Count; i++) {
-                if (levelController.upgradeTemporaryType1[i]["Title"] == Title.GetComponent<TextMeshProUGUI>().text) {
-                    MH = int.Parse(levelController.upgradeTemporaryType1[i]["MH"]);
-                    time = float.Parse(levelController.upgradeTemporaryType1[i]["time"]);
-                    break;
+        if (type == "UpgradeTemporaryType1") { // type1: Reduce MH costs
+            for (int i = 0; i < levelController.upgradeTemporaryType1Amount; i++) {
+                if (!levelController.boughtUpgradeTemporaryType1.Contains(i)){
+                    if (levelController.upgradeTemporaryType1[i]["Title"] == Title.GetComponent<TextMeshProUGUI>().text) {
+                        MH = float.Parse(levelController.upgradeTemporaryType1[i]["MH"]);
+                        time = float.Parse(levelController.upgradeTemporaryType1[i]["Time"]);
+                        j = i;
+                        break;
+                    }
                 }
             }
+
             if (levelController.MH < MH || levelController.time < time){
                 return;
             } else {
@@ -447,16 +453,29 @@ public class CountController : MonoBehaviour
                 updateCountStudy(0);
                 updateCountProject(0);
                 updateCountTest(0);
+
+                levelController.price_study_MH = levelController.price_study_MH_og * (float) Math.Pow(levelController.inc_study, levelController.study);
+                levelController.price_test_MH = levelController.price_test_MH_og * (float) Math.Pow(levelController.inc_test, levelController.test);
+                levelController.price_project_MH = levelController.price_project_MH_og * (float) Math.Pow(levelController.inc_project, levelController.project);
+                
+                levelController.boughtUpgradeTemporaryType1.Add(j);
+
+                Debug.Log("UpgradeTemporaryType1: " + levelController.price_test_MH);
+                Debug.Log("UpgradeTemporaryType1: " + levelController.boughtUpgradeTemporaryType1);
+
         
             }
-        } else if (type == "UpgradeTemporary2") { // type2: Aumenta a taxa de ganho de Mental Health por tempo. Ao invés de ganhar 0.5 MH por minuto, ganha 1 MH por minuto   (Taxa/percentual)
+        } else if (type == "UpgradeTemporaryType2") { // type2: Aumenta a taxa de ganho de Mental Health por tempo. Ao invés de ganhar 0.5 MH por minuto, ganha 1 MH por minuto   (Taxa/percentual)
             for (int i = 0; i < levelController.upgradeTemporaryType2.Count; i++) {
-                if (levelController.upgradeTemporaryType2[i]["Title"] == Title.GetComponent<TextMeshProUGUI>().text) {
-                   MH = int.Parse(levelController.upgradeTemporaryType1[i]["MH"]);
-                   time = float.Parse(levelController.upgradeTemporaryType1[i]["time"]);
-                    break;
+                if (!levelController.boughtUpgradeTemporaryType2.Contains(i)){
+                    if (levelController.upgradeTemporaryType2[i]["Title"] == Title.GetComponent<TextMeshProUGUI>().text) {
+                       MH = float.Parse(levelController.upgradeTemporaryType2[i]["MH"]);
+                       time = float.Parse(levelController.upgradeTemporaryType2[i]["Time"]);
+                       j = i;
+                        break;
                     }
                 }
+            }
             if (levelController.MH < MH || levelController.time < time){
                 return;
             }
@@ -465,18 +484,26 @@ public class CountController : MonoBehaviour
                 updateCountMentalHealth(-MH);
                 updateCountTime(-time);
                 levelController.inc_MH = levelController.inc_MH*1.5f;
+
+                levelController.boughtUpgradeTemporaryType2.Add(j);
+                Debug.Log("UpgradeTemporaryType2: " + levelController.inc_MH);
+                Debug.Log("UpgradeTemporaryType2: " + levelController.boughtUpgradeTemporaryType2);
             }
 
         }
 
         else {  // type3: Reduce Time costs
 
-            for (int i = 0; i < levelController.upgradeTemporaryType3.Count; i++) {
-                if (levelController.upgradeTemporaryType3[i]["Title"] == Title.GetComponent<TextMeshProUGUI>().text) {
-                    MH = int.Parse(levelController.upgradeTemporaryType1[i]["MH"]);
-                    time = float.Parse(levelController.upgradeTemporaryType1[i]["time"]);
-                    break;
+            for (int i = 0; i < levelController.upgradeTemporaryType3Amount; i++) {
+                if (!levelController.boughtUpgradeTemporaryType3.Contains(i)){
+                    if (levelController.upgradeTemporaryType3[i]["Title"] == Title.GetComponent<TextMeshProUGUI>().text) {
+                        MH = float.Parse(levelController.upgradeTemporaryType3[i]["MH"]);
+                        time = float.Parse(levelController.upgradeTemporaryType3[i]["Time"]);
+                        j = i;
+                        break;
+                    }
                 }
+
                 if (levelController.MH < MH || levelController.time < time){
                 return;
                 }
@@ -491,6 +518,30 @@ public class CountController : MonoBehaviour
                     updateCountStudy(0);
                     updateCountProject(0);
                     updateCountTest(0);
+
+                    levelController.boughtUpgradeTemporaryType3.Add(j);
+
+                    levelController.price_study_time = levelController.price_study_time_og * (float) Math.Pow(levelController.inc_study, levelController.study);
+                    levelController.price_test_time = levelController.price_test_time_og * (float) Math.Pow(levelController.inc_test, levelController.test);
+                    levelController.price_project_time = levelController.price_project_time_og * (float) Math.Pow(levelController.inc_project, levelController.project);
+    
+                    if (levelController.price_test_time > levelController.max_time){
+                        levelController.price_test_time = levelController.max_time;
+                    }
+
+                    if (levelController.price_study_time > levelController.max_time){
+                        levelController.price_study_time = levelController.max_time;
+                    }
+
+                    if (levelController.price_project_time > levelController.max_time){
+                        levelController.price_project_time = levelController.max_time;
+                    }
+
+                    Debug.Log("UpgradeTemporaryType3: " + levelController.price_test_time);
+                    Debug.Log("UpgradeTemporaryType3: " + levelController.boughtUpgradeTemporaryType3);
+
+                    levelController.boughtUpgradeTemporaryType3.Add(j);
+                    
                 }
             }
         }
@@ -548,7 +599,6 @@ public class CountController : MonoBehaviour
     }
 
     public void InstantiateUpgradeTemporary() {
-        int j = 0;
         GameObject upgradePanel = GameObject.Find("UpgradeTemporaryPanel");
         GameObject item = (GameObject)Resources.Load("Templates/UpgradeTemporary", typeof(GameObject));
         Transform Title;
@@ -561,7 +611,7 @@ public class CountController : MonoBehaviour
             if (!levelController.boughtUpgradeTemporaryType1.Contains(i)){
                 GameObject upgrade = Instantiate(item, new Vector3(0, 0, 0), Quaternion.identity);
                 upgrade.transform.SetParent(upgradePanel.transform, false);
-                upgrade.tag = "UpgradeTemporary1";
+                upgrade.tag = "UpgradeTemporaryType1";
                 upgradesTemporary.Add(upgrade);
 
                 Title = upgrade.transform.Find("Title");
@@ -626,7 +676,7 @@ public class CountController : MonoBehaviour
                 var t = 0;
                 var MH = levelController.price_MH_upgrade_temporary_type2*Math.Pow(levelController.upgradeTemporaryCoefficient, i);
 
-                levelController.upgradeTemporaryType2[i].Add("Price", MH.ToString());
+                levelController.upgradeTemporaryType2[i].Add("MH", MH.ToString());
                 levelController.upgradeTemporaryType2[i].Add("Time", t.ToString());
 
                 TimeCount.GetComponent<TextMeshProUGUI>().text = t.ToString();
@@ -679,13 +729,14 @@ public class CountController : MonoBehaviour
     }
 
     public void InstantiateUpgradePermanent() {
-        int j = 0;
         GameObject upgradePanel = GameObject.Find("UpgradePermanentPanel");
         GameObject item = (GameObject)Resources.Load("Templates/UpgradePermanent", typeof(GameObject));
         Transform Title;
         Transform ContentText;
         Transform Icon;
         Transform MoneyCount;
+
+        Debug.Log(levelController.upgradePermanentType1Amount);
 
         for (int i = 0; i < levelController.upgradePermanentType1Amount; i++){
             if (!levelController.boughtUpgradePermanentType1.Contains(i)){
@@ -714,7 +765,7 @@ public class CountController : MonoBehaviour
 
                 int Coin = levelController.price_coin_upgrade_permanent_type1;
 
-                MoneyCount.GetComponent<TextMeshProUGUI>().text = Math.Round(levelController.price_time_upgrade_temporary_type1, 0).ToString();
+                MoneyCount.GetComponent<TextMeshProUGUI>().text = levelController.price_coin_upgrade_permanent_type1.ToString();
             }
         }
 
