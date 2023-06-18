@@ -87,7 +87,7 @@ public class LevelController : MonoBehaviour
     void Start()
     {
         
-        
+        PlayerPrefs.DeleteAll();
         Load();
         offlineController = GameObject.Find("Menu").GetComponent<OfflineController>();
         offlineController.LoadOfflineProduction();
