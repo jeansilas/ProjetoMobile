@@ -37,27 +37,32 @@ public class BarController : MonoBehaviour
             .ToArray();
 
         levelController = GameObject.Find("Menu").GetComponent<LevelController>();
+
+        Debug.Log(levelController.max_time);
         
         foreach (Slider slider in barTime)
         {
             slider.maxValue = levelController.max_time;
+            slider.value = levelController.time;
         }
 
         foreach (Slider slider in barStudy)
         {
             slider.maxValue = levelController.max_study;
+            slider.value = levelController.study;
         }
 
         foreach (Slider slider in barProject)
         {
             slider.maxValue = levelController.max_project;
+            slider.value = levelController.project;
         }
 
         foreach (Slider slider in barTest)
         {
             slider.maxValue = levelController.max_test;
+            slider.value = levelController.test;
         }
-
 
     }
 

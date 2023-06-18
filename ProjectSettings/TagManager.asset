@@ -21,6 +21,12 @@ TagManager:
   - priceTest
   - unlockProject
   - unlockTest
+  - UpgradeTemporary
+  - bonus
+  - offline
+  - UpgradeTemporaryType1
+  - UpgradeTemporaryType2
+  - UpgradeTemporaryType3
   layers:
   - Default
   - TransparentFX
@@ -28,7 +34,7 @@ TagManager:
   - 
   - Water
   - UI
-  - 
+  - Video
   - 
   - 
   - 
