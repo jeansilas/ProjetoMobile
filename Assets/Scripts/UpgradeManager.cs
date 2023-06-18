@@ -21,6 +21,7 @@ public class UpgradeManager : MonoBehaviour
     public void UpgradeClick(GameObject type)
     {
         countController.upgradeTemporary(type);
+        Destroy(gameObject);
         
     }
 }

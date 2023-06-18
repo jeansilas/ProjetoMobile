@@ -574,7 +574,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 120, y: -11}
+  m_AnchoredPosition: {x: 167, y: -25}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &143925780
@@ -660,7 +660,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 0, y: 0, z: 0, w: 0}
+  m_margin: {x: 0, y: -50.887875, z: 0, w: 0}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
@@ -1868,8 +1868,6 @@ MonoBehaviour:
   price_MH_upgrade_temporary_type2: 0
   price_MH_upgrade_temporary_type3: 0
   price_coin_upgrade_permanent_type1: 0
-  price_coin_upgrade_permanent_type2: 0
-  price_coin_upgrade_permanent_type3: 0
   price_time_upgrade_temporary_type1: 0
   price_time_upgrade_temporary_type2: 0
   price_time_upgrade_temporary_type3: 0
@@ -1877,12 +1875,15 @@ MonoBehaviour:
   upgradeTemporaryType1Amount: 0
   upgradeTemporaryType2Amount: 0
   upgradeTemporaryType3Amount: 0
+  upgradePermanentType1Amount: 0
   boughtUpgradeTemporaryType1: 
   boughtUpgradeTemporaryType2: 
   boughtUpgradeTemporaryType3: 
+  boughtUpgradePermanentType1: 
   stringboughtUpgradeTemporaryType1: 
   stringboughtUpgradeTemporaryType2: 
   stringboughtUpgradeTemporaryType3: 
+  stringboughtUpgradePermanentType1: 
 --- !u!114 &307116527
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1896,6 +1897,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   upgradesTemporary: []
+  upgradesPermanent: []
 --- !u!114 &307116528
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2066,7 +2068,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: CONTINUAR
+  m_text: Continue
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: dc36b3fdc14f47ebb36fd484a67e268a, type: 2}
   m_sharedMaterial: {fileID: 2140032, guid: dc36b3fdc14f47ebb36fd484a67e268a, type: 2}
@@ -2093,8 +2095,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 50
-  m_fontSizeBase: 50
+  m_fontSize: 80
+  m_fontSizeBase: 80
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -2573,7 +2575,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -515, y: -930}
+  m_AnchoredPosition: {x: 515, y: -930}
   m_SizeDelta: {x: 639, y: 279}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &386759876
@@ -3871,7 +3873,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 120, y: -11}
+  m_AnchoredPosition: {x: 161, y: -48}
   m_SizeDelta: {x: 200, y: 10}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &831006774
@@ -3957,7 +3959,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 0, y: 0, z: 0, w: 0}
+  m_margin: {x: 0, y: 0, z: 0, w: 101.77576}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
@@ -4247,7 +4249,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &888102733
 RectTransform:
   m_ObjectHideFlags: 0
@@ -7180,7 +7182,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'DOBRAR
+  m_text: 'Double Rewards
 
 '
   m_isRightToLeft: 0
@@ -7209,8 +7211,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 50
-  m_fontSizeBase: 50
+  m_fontSize: 80
+  m_fontSizeBase: 80
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -7296,7 +7298,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 515, y: -930}
+  m_AnchoredPosition: {x: -515, y: -930}
   m_SizeDelta: {x: 639, y: 270}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1780348112
@@ -9079,7 +9081,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &2136902805
 RectTransform:
   m_ObjectHideFlags: 0

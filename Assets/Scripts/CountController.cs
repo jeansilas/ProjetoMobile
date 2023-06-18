@@ -426,36 +426,37 @@ public class CountController : MonoBehaviour
         GameObject Title = upgrade.transform.Find("Title").gameObject;
         float MH = 0;
         float time = 0;
-
-       
         
         if (type == "UpgradeTemporary1") { // type1: Reduce MH costs
-             for (int i = 0; i < levelController.upgradeTemporaryType1.Count; i++) {
-            if (levelController.upgradeTemporaryType1[i]["Title"] == Title.GetComponent<TextMeshProUGUI>().text) {
-                MH = int.Parse(levelController.upgradeTemporaryType1[i]["MH"]);
-                time = float.Parse(levelController.upgradeTemporaryType1[i]["time"]);
-                break;
-            }
-        }
-            if (levelController.MH < MH || levelController.time < time){
-            return;
-            }
-
-            else {
-                updateCountMentalHealth(-MH);
-                updateCountTime(-time);
-                levelController.time = levelController.time*2;
-            }
-        }
-
-        else if (type == "UpgradeTemporary2") { // type2: Aumenta a taxa de ganho de Mental Health por tempo. Ao invés de ganhar 0.5 MH por minuto, ganha 1 MH por minuto   (Taxa/percentual)
-            for (int i = 0; i < levelController.upgradeTemporaryType2.Count; i++) {
-            if (levelController.upgradeTemporaryType2[i]["Title"] == Title.GetComponent<TextMeshProUGUI>().text) {
-               MH = int.Parse(levelController.upgradeTemporaryType1[i]["MH"]);
-               time = float.Parse(levelController.upgradeTemporaryType1[i]["time"]);
-                break;
+            for (int i = 0; i < levelController.upgradeTemporaryType1.Count; i++) {
+                if (levelController.upgradeTemporaryType1[i]["Title"] == Title.GetComponent<TextMeshProUGUI>().text) {
+                    MH = int.Parse(levelController.upgradeTemporaryType1[i]["MH"]);
+                    time = float.Parse(levelController.upgradeTemporaryType1[i]["time"]);
+                    break;
                 }
             }
+            if (levelController.MH < MH || levelController.time < time){
+                return;
+            } else {
+                updateCountMentalHealth(-MH);
+                updateCountTime(-time);
+                levelController.price_study_MH_og = levelController.price_study_MH_og * 0.9f;
+                levelController.price_project_MH_og = levelController.price_project_MH_og * 0.9f;
+                levelController.price_test_MH_og = levelController.price_test_MH_og * 0.9f;
+
+                updateCountStudy(0);
+                updateCountProject(0);
+                updateCountTest(0);
+        
+            }
+        } else if (type == "UpgradeTemporary2") { // type2: Aumenta a taxa de ganho de Mental Health por tempo. Ao invés de ganhar 0.5 MH por minuto, ganha 1 MH por minuto   (Taxa/percentual)
+            for (int i = 0; i < levelController.upgradeTemporaryType2.Count; i++) {
+                if (levelController.upgradeTemporaryType2[i]["Title"] == Title.GetComponent<TextMeshProUGUI>().text) {
+                   MH = int.Parse(levelController.upgradeTemporaryType1[i]["MH"]);
+                   time = float.Parse(levelController.upgradeTemporaryType1[i]["time"]);
+                    break;
+                    }
+                }
             if (levelController.MH < MH || levelController.time < time){
                 return;
             }
@@ -463,7 +464,7 @@ public class CountController : MonoBehaviour
             else {
                 updateCountMentalHealth(-MH);
                 updateCountTime(-time);
-                levelController.inc_MH = levelController.inc_MH*2;
+                levelController.inc_MH = levelController.inc_MH*1.5f;
             }
 
         }
@@ -471,22 +472,61 @@ public class CountController : MonoBehaviour
         else {  // type3: Reduce Time costs
 
             for (int i = 0; i < levelController.upgradeTemporaryType3.Count; i++) {
-            if (levelController.upgradeTemporaryType3[i]["Title"] == Title.GetComponent<TextMeshProUGUI>().text) {
-                MH = int.Parse(levelController.upgradeTemporaryType1[i]["MH"]);
-                time = float.Parse(levelController.upgradeTemporaryType1[i]["time"]);
-                break;
-            }
-            if (levelController.MH < MH || levelController.time < time){
-            return;
-            }
+                if (levelController.upgradeTemporaryType3[i]["Title"] == Title.GetComponent<TextMeshProUGUI>().text) {
+                    MH = int.Parse(levelController.upgradeTemporaryType1[i]["MH"]);
+                    time = float.Parse(levelController.upgradeTemporaryType1[i]["time"]);
+                    break;
+                }
+                if (levelController.MH < MH || levelController.time < time){
+                return;
+                }
 
-            else {
-                updateCountMentalHealth(-MH);
-                updateCountTime(-time);
-                levelController.inc_MH = levelController.inc_MH*2;
+                else {
+                    updateCountMentalHealth(-MH);
+                    updateCountTime(-time);
+                    levelController.price_study_time_og = levelController.price_study_time_og * 0.9f;
+                    levelController.price_project_time_og = levelController.price_project_time_og * 0.9f;
+                    levelController.price_test_time_og = levelController.price_test_time_og * 0.9f;
+
+                    updateCountStudy(0);
+                    updateCountProject(0);
+                    updateCountTest(0);
+                }
             }
         }
-    }
+
+        if (levelController.price_study_MH >= 1000 && levelController.study != levelController.max_study){
+            var exponent = Math.Floor(Math.Log10(Math.Abs(levelController.price_study_MH)));
+            var rounded = Math.Round((levelController.price_study_MH) / Math.Pow(10, exponent), 2);
+            price_study.transform.GetComponent<TextMeshProUGUI>().text = rounded.ToString("F2") + "e+" + exponent.ToString() + " Mental Health / " + Math.Round(levelController.price_study_time, 2).ToString() + " Time";
+        } else if (levelController.study == levelController.max_study){
+            price_study.transform.GetComponent<TextMeshProUGUI>().text = "MAX";
+            GameObject.Find("Study").GetComponent<Button>().interactable = false;
+        } else{
+            price_study.transform.GetComponent<TextMeshProUGUI>().text = Math.Round(levelController.price_study_MH,0).ToString() + " Mental Health / " + Math.Round(levelController.price_study_time, 2).ToString() + " Time";
+        }
+
+        if (levelController.price_project_MH >= 1000 && levelController.project != levelController.max_project){
+            var exponent = Math.Floor(Math.Log10(Math.Abs(levelController.price_project_MH)));
+            var rounded = Math.Round((levelController.price_project_MH) / Math.Pow(10, exponent), 2);
+            price_project.transform.GetComponent<TextMeshProUGUI>().text = rounded.ToString("F2") + "e+" + exponent.ToString() + " Mental Health / " + Math.Round(levelController.price_project_time, 2).ToString() + " Time";
+        } else if (levelController.project == levelController.max_project){
+            price_project.transform.GetComponent<TextMeshProUGUI>().text = "MAX";
+            GameObject.Find("Project").GetComponent<Button>().interactable = false;
+        } else{
+            price_project.transform.GetComponent<TextMeshProUGUI>().text = Math.Round(levelController.price_project_MH,0).ToString() + " Mental Health / " + Math.Round(levelController.price_project_time, 2).ToString() + " Time";
+        }
+        
+        if (levelController.price_test_MH >= 1000 && levelController.test != levelController.max_test){
+            var exponent = Math.Floor(Math.Log10(Math.Abs(levelController.price_test_MH)));
+            var rounded = Math.Round((levelController.price_test_MH) / Math.Pow(10, exponent), 2);
+            price_test.transform.GetComponent<TextMeshProUGUI>().text = rounded.ToString("F2") + "e+" + exponent.ToString() + " Mental Health / " + Math.Round(levelController.price_test_time, 2).ToString() + " Time";
+        } else if (levelController.test == levelController.max_test){
+            price_test.transform.GetComponent<TextMeshProUGUI>().text = "MAX";
+            GameObject.Find("Test").GetComponent<Button>().interactable = false;
+        } else{
+            price_test.transform.GetComponent<TextMeshProUGUI>().text = Math.Round(levelController.price_test_MH,0).ToString() + " Mental Health / " + Math.Round(levelController.price_test_time, 2).ToString() + " Time";
+        }
     }
 
     public void upgradePermanent(int type) {
