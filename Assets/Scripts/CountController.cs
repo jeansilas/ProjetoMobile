@@ -580,20 +580,29 @@ public class CountController : MonoBehaviour
         }
     }
 
-    public void upgradePermanent(int type) {
+    public void upgradePermanent(GameObject upgrade) {
 
-        
-        if (type == 1) { // type1: Aumenta a quantidade de tempo exemplo:  vai de 3h para 6h (Absoluto)
-            int coin = levelController.price_coin_upgrade_permanent_type1;
-            if (levelController.coin < coin){
-            return;
-            }
+        GameObject Title = upgrade.transform.Find("Title").gameObject;
+        int j = -1;
+        int coin = 0;
 
-            else {
-                updateCountCoin(-coin);
-                levelController.max_time += 1 ;
+        for (int i = 0; i < levelController.upgradePermanentType1Amount; i++) {
+        if (!levelController.boughtUpgradePermanentType1.Contains(i)){
+            if (levelController.upgradePermanentType1[i]["Title"] == Title.GetComponent<TextMeshProUGUI>().text) {
+                coin = int.Parse(levelController.upgradePermanentType1[i]["coin"]);
+                j = i;
+                break;
             }
         }
+        }
+        if (levelController.coin < coin){
+            return;
+        } else{
+            updateCountCoin(-coin);
+            levelController.boughtUpgradePermanentType1.Add(j);
+            levelController.max_time += 2;
+        }
+
 
 
     }
@@ -736,8 +745,6 @@ public class CountController : MonoBehaviour
         Transform Icon;
         Transform MoneyCount;
 
-        Debug.Log(levelController.upgradePermanentType1Amount);
-
         for (int i = 0; i < levelController.upgradePermanentType1Amount; i++){
             if (!levelController.boughtUpgradePermanentType1.Contains(i)){
                 GameObject upgrade = Instantiate(item, new Vector3(0, 0, 0), Quaternion.identity);
@@ -764,6 +771,8 @@ public class CountController : MonoBehaviour
 
 
                 int Coin = levelController.price_coin_upgrade_permanent_type1;
+
+                levelController.upgradePermanentType1[i].Add("Coin", Coin.ToString());
 
                 MoneyCount.GetComponent<TextMeshProUGUI>().text = levelController.price_coin_upgrade_permanent_type1.ToString();
             }

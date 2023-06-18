@@ -10,6 +10,7 @@ public class UpgradeManager : MonoBehaviour
     void Start()
     {
         countController = GameObject.Find("Menu").GetComponent<CountController>();
+        Debug.Log("UpgradeManager start");
     }
 
     // Update is called once per frame

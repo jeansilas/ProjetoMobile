@@ -158,12 +158,12 @@ public class LevelController : MonoBehaviour
         upgradeTemporaryType3_2.Add("ContentText", "a");
         upgradeTemporaryType3_2.Add("Icon", "Assets/Resources/Icons/gatinho_pixel.png");
 
-        upgradePermanentType1_1.Add("Title", "a");
-        upgradePermanentType1_1.Add("ContentText", "a");
+        upgradePermanentType1_1.Add("Title", "Wake up early");
+        upgradePermanentType1_1.Add("ContentText", "You decide to change your life and wake up early.");
         upgradePermanentType1_1.Add("Icon", "Assets/Resources/Icons/gatinho_pixel.png");
 
-        upgradePermanentType1_2.Add("Title", "a");
-        upgradePermanentType1_2.Add("ContentText", "a");
+        upgradePermanentType1_2.Add("Title", "Sleep Late");
+        upgradePermanentType1_2.Add("ContentText", "You decide to change your life and sleep late.");
         upgradePermanentType1_2.Add("Icon", "Assets/Resources/Icons/gatinho_pixel.png");
 
         upgradeTemporaryType1.Add(upgradeTemporaryType1_1);
@@ -184,6 +184,7 @@ public class LevelController : MonoBehaviour
         upgradePermanentType1.Add(upgradePermanentType1_2);
 
         upgradePermanentType1Amount = 2;
+        price_coin_upgrade_permanent_type1 = 50;
 
     }
 

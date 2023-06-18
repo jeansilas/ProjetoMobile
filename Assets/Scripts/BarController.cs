@@ -37,6 +37,8 @@ public class BarController : MonoBehaviour
             .ToArray();
 
         levelController = GameObject.Find("Menu").GetComponent<LevelController>();
+
+        Debug.Log(levelController.max_time);
         
         foreach (Slider slider in barTime)
         {
