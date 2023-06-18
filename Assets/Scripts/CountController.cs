@@ -772,7 +772,7 @@ public class CountController : MonoBehaviour
 
                 int Coin = levelController.price_coin_upgrade_permanent_type1;
 
-                levelController.upgradePermanentType1[i].Add("Coin", Coin.ToString());
+                levelController.upgradePermanentType1[i].Add("coin", Coin.ToString());
 
                 MoneyCount.GetComponent<TextMeshProUGUI>().text = levelController.price_coin_upgrade_permanent_type1.ToString();
             }

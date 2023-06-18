@@ -21,8 +21,13 @@ public class UpgradeManager : MonoBehaviour
 
     public void OnClick(GameObject type)
     {
-        Debug.Log("UpgradeManager: " + type.name);
-        countController.upgradeTemporary(type);
+        if (type.name == "UpgradePermanent(Clone)")
+        {
+            countController.upgradePermanent(type);
+        } else{
+            countController.upgradeTemporary(type);
+        }
+        
         Destroy(gameObject);
         
     }
